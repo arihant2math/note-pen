@@ -11,8 +11,8 @@ impl TimeSignature {
     pub const COMMON_TIME: Self = Self { notes: 4, beat_value: 4 };
     pub const CUT_TIME: Self = Self { notes: 2, beat_value: 2 };
 
-    pub fn new(beats: u8, beat_value: u8) -> Self {
-        Self { notes: beats, beat_value }
+    pub fn new(notes: u8, beat_value: u8) -> Self {
+        Self { notes, beat_value }
     }
 
     pub fn simple(beats: u8, value: PrimitiveDuration) -> Self {
