@@ -1,6 +1,6 @@
 mod accidental;
 mod alphabet;
-mod chord;
+pub mod chord;
 pub mod duration;
 pub mod key_signature;
 pub mod note;
@@ -13,7 +13,6 @@ mod time_signature;
 
 pub use accidental::Accidental;
 pub use alphabet::Alphabet;
-pub use chord::Chord;
 pub use part::Part;
 pub use rest::Rest;
 pub use time_signature::TimeSignature;
@@ -21,7 +20,8 @@ pub use time_signature::TimeSignature;
 pub(crate) use prelude::*;
 
 pub mod prelude {
-    pub use crate::{Accidental, Alphabet, Chord, Part, Rest, TimeSignature};
+    pub use crate::{Accidental, Alphabet, Part, Rest, TimeSignature};
+    pub use crate::chord::{Chord, Inversion};
     pub use crate::duration::{PrimitiveDuration, Duration};
     pub use crate::note::{NoteValue, Note};
     pub use crate::phrase::{PhraseItem, Phrase};
