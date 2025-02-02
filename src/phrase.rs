@@ -16,7 +16,6 @@ pub trait ExtendedModifierType {
 
 #[derive(Clone)]
 pub struct ExtendedModifier {
-    pub id: u64,
     pub modifier_type: Arc<dyn ExtendedModifierType>,
 }
 
@@ -50,7 +49,7 @@ pub enum InnerPhraseItem {
 #[derive(Clone)]
 pub struct PhraseItem {
     pub inner: InnerPhraseItem,
-    pub id: u64,
+    pub(crate) id: u64,
 }
 
 #[derive(Clone)]
