@@ -85,6 +85,14 @@ impl NoteValue {
     pub fn decrement(&self) -> Self {
         Self::from_id(self.id() - 1)
     }
+
+    pub fn increment_by(&self, steps: i64) -> Self {
+        Self::from_id(self.id() + steps)
+    }
+
+    pub fn decrement_by(&self, steps: i64) -> Self {
+        Self::from_id(self.id() - steps)
+    }
 }
 
 impl PartialEq for NoteValue {
