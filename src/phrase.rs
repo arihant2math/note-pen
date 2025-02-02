@@ -47,11 +47,13 @@ pub enum InnerPhraseItem {
     EndExtendedModifier(u64),
 }
 
+#[derive(Clone)]
 pub struct PhraseItem {
     pub inner: InnerPhraseItem,
     pub id: u64,
 }
 
+#[derive(Clone)]
 pub struct Phrase {
     pub items: Vec<PhraseItem>,
 }
