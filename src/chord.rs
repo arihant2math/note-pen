@@ -16,6 +16,12 @@ pub struct Chord {
 #[repr(transparent)]
 pub struct Inversion(u8);
 
+impl Default for Inversion {
+    fn default() -> Self {
+        Self::ROOT
+    }
+}
+
 impl Inversion {
     pub fn new(inversion: u8) -> Self {
         Self(inversion)
@@ -23,6 +29,10 @@ impl Inversion {
 
     pub fn value(&self) -> u8 {
         self.0
+    }
+
+    pub fn value_for(&self, size: u8) -> u8 {
+        (self.0 + size) % size
     }
 
     pub const ROOT: Self = Self(0);
@@ -44,17 +54,34 @@ impl Chord {
         }
     }
 
-    /// Creates a trait with a given tonality and root.
+    pub fn rotate(&self) -> Self {
+        let mut notes = self.notes.clone();
+        let first = notes.remove(0);
+        notes.push(first);
+        Self { notes }
+    }
+
+    pub fn rotate_by(&self, n: usize) -> Self {
+        let mut notes = self.notes.clone();
+        for _ in 0..n {
+            let first = notes.remove(0);
+            notes.push(first);
+        }
+        Self { notes }
+    }
+
+    /// Creates a trait with a given tonality, root, and inversion.
     ///
     /// # Examples
     /// ```rust
     /// use note_pen::prelude::*;
-    /// let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4));
+    /// let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::ROOT);
     /// assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
     ///   Note::new(Alphabet::E, Accidental::Natural, 4) +
     ///  Note::new(Alphabet::G, Accidental::Natural, 4)
     /// );
-    pub fn triad_from_root(tonality: Tonality, root: Note) -> Self {
+    pub fn triad_from_root(tonality: Tonality, root: Note, inversion: Inversion) -> Self {
+        let inversion = inversion.value_for(3);
         let mut notes = vec![root];
         match tonality {
             Tonality::Major => {
@@ -74,7 +101,7 @@ impl Chord {
                 notes.push(root + Interval::AUGMENTED_FIFTH);
             }
         }
-        Self { notes }
+        Self { notes }.rotate_by(inversion as usize)
     }
 }
 
