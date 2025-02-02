@@ -22,7 +22,7 @@ pub enum Syllable {
 }
 
 impl Syllable {
-    fn into_u8(self) -> u8 {
+    pub fn into_u8(self) -> u8 {
         match self {
             Self::Do => 0,
             Self::Di => 1,
@@ -44,7 +44,29 @@ impl Syllable {
         }
     }
 
-    fn increment(&self) -> Self {
+    pub fn decrement(&self) -> Self {
+        match self {
+            Self::Do => Self::Ti,
+            Self::Di => Self::Do,
+            Self::Ra => Self::Do,
+            Self::Re => Self::Di,
+            Self::Ri => Self::Re,
+            Self::Me => Self::Re,
+            Self::Mi => Self::Ri,
+            Self::Fa => Self::Mi,
+            Self::Fi => Self::Fa,
+            Self::Se => Self::Fa,
+            Self::So => Self::Fi,
+            Self::Si => Self::So,
+            Self::Le => Self::So,
+            Self::La => Self::Si,
+            Self::Li => Self::La,
+            Self::Te => Self::La,
+            Self::Ti => Self::Li,
+        }
+    }
+
+    pub fn increment(&self) -> Self {
         match self {
             Self::Do => Self::Di,
             Self::Di => Self::Re,
