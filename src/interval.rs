@@ -10,9 +10,11 @@ impl Interval {
     pub const MAJOR_SECOND: Self = Self(2);
     pub const MINOR_THIRD: Self = Self(3);
     pub const MAJOR_THIRD: Self = Self(4);
+    pub const DIMINISHED_FOURTH: Self = Self(4);
     pub const PERFECT_FOURTH: Self = Self(5);
     pub const TRITONE: Self = Self(6);
     pub const PERFECT_FIFTH: Self = Self(7);
+    pub const AUGMENTED_FIFTH: Self = Self(8);
     pub const MINOR_SIXTH: Self = Self(8);
     pub const MAJOR_SIXTH: Self = Self(9);
     pub const MINOR_SEVENTH: Self = Self(10);
