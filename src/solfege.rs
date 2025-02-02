@@ -1,9 +1,91 @@
 use crate::Alphabet;
 
-pub struct Fixed;
-pub struct Moveable;
+#[derive(Copy, Clone, Debug)]
+pub enum Syllable {
+    Do,
+    Di,
+    Ra,
+    Re,
+    Ri,
+    Me,
+    Mi,
+    Fa,
+    Fi,
+    Se,
+    So,
+    Si,
+    Le,
+    La,
+    Li,
+    Te,
+    Ti,
+}
 
-pub struct Solfege<T> {
-    pub note: Alphabet,
-    pub kind: T,
+impl Syllable {
+    fn into_u8(self) -> u8 {
+        match self {
+            Self::Do => 0,
+            Self::Di => 1,
+            Self::Ra => 1,
+            Self::Re => 2,
+            Self::Ri => 3,
+            Self::Me => 3,
+            Self::Mi => 4,
+            Self::Fa => 5,
+            Self::Fi => 6,
+            Self::Se => 6,
+            Self::So => 7,
+            Self::Si => 8,
+            Self::Le => 8,
+            Self::La => 9,
+            Self::Li => 10,
+            Self::Te => 10,
+            Self::Ti => 11,
+        }
+    }
+
+    fn increment(&self) -> Self {
+        match self {
+            Self::Do => Self::Di,
+            Self::Di => Self::Re,
+            Self::Ra => Self::Re,
+            Self::Re => Self::Ri,
+            Self::Ri => Self::Mi,
+            Self::Me => Self::Mi,
+            Self::Mi => Self::Fa,
+            Self::Fa => Self::Fi,
+            Self::Fi => Self::So,
+            Self::Se => Self::So,
+            Self::So => Self::Si,
+            Self::Si => Self::La,
+            Self::Le => Self::La,
+            Self::La => Self::Li,
+            Self::Li => Self::Ti,
+            Self::Te => Self::Ti,
+            Self::Ti => Self::Do,
+        }
+    }
+}
+
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[repr(transparent)]
+pub struct Moveable(Alphabet);
+
+#[allow(non_upper_case_globals)]
+pub const Fixed: Moveable = Moveable(Alphabet::C);
+
+pub struct Solfege {
+    pub syllable: Syllable,
+    pub kind: Moveable,
+}
+
+impl Solfege {
+    pub fn new(syllable: Syllable, kind: Moveable) -> Self {
+        Self { syllable, kind }
+    }
+
+    pub fn id(&self) -> u8 {
+        self.kind.0 as u8 + self.syllable.into_u8()
+    }
 }
