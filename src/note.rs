@@ -18,10 +18,14 @@ impl NoteValue {
         }
     }
 
+    /// The enharmonic equivalent of a note will be returned in a simpler form on the note.
+    /// # Compatability
+    /// This method might not return the same exact value from release to release,
+    /// however, it is guaranteed to be an enharmonic equivalent to the supplied note.
     pub fn simplify(&self) -> Self {
         match self.accidental {
-            Accidental::Natural => *self,
-            _ => todo!("Implement Note::simplify for other accidentals"),
+            Accidental::Natural | Accidental::Flat | Accidental::Sharp => *self,
+            Accidental::DoubleFlat | Accidental::DoubleSharp => Self::from_id(self.id())
         }
     }
 
