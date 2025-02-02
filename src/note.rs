@@ -1,4 +1,5 @@
-use crate::{Accidental, Alphabet};
+use std::ops::{Add, Sub};
+use crate::{Accidental, Alphabet, Interval};
 use crate::duration::Duration;
 
 #[derive(Copy, Clone, Debug)]
@@ -98,6 +99,44 @@ impl NoteValue {
 impl PartialEq for NoteValue {
     fn eq(&self, other: &Self) -> bool {
         self.id() == other.id()
+    }
+}
+
+impl Add<Interval> for NoteValue {
+    type Output = NoteValue;
+    fn add(self, interval: Interval) -> NoteValue {
+        NoteValue::from_id(self.id() + interval.0 as i64)
+    }
+}
+
+impl Sub for NoteValue {
+    type Output = Interval;
+    fn sub(self, other: Self) -> Interval {
+        Interval((self.id() - other.id()) as u8)
+    }
+}
+
+#[cfg(test)]
+mod sub_tests {
+    #[test]
+    fn test_sub() {
+        use super::{Accidental, Alphabet, NoteValue};
+        use crate::Interval;
+
+        let a = NoteValue::new(Alphabet::A, Accidental::Natural, 4);
+        let b = NoteValue::new(Alphabet::B, Accidental::Natural, 4);
+        let c = NoteValue::new(Alphabet::C, Accidental::Natural, 4);
+        let d = NoteValue::new(Alphabet::D, Accidental::Natural, 4);
+        let e = NoteValue::new(Alphabet::E, Accidental::Natural, 4);
+        let f = NoteValue::new(Alphabet::F, Accidental::Natural, 4);
+        let g = NoteValue::new(Alphabet::G, Accidental::Natural, 4);
+
+        assert_eq!(b - a, Interval::MAJOR_SECOND);
+        assert_eq!(c - a, Interval::MAJOR_THIRD);
+        assert_eq!(d - a, Interval::PERFECT_FOURTH);
+        assert_eq!(e - a, Interval::PERFECT_FIFTH);
+        assert_eq!(f - a, Interval::MINOR_SIXTH);
+        assert_eq!(g - a, Interval::MINOR_SEVENTH);
     }
 }
 
