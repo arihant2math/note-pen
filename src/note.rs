@@ -1,4 +1,5 @@
 use crate::{Accidental, Alphabet};
+use crate::duration::Duration;
 
 #[derive(Copy, Clone, Debug)]
 pub struct NoteValue {
@@ -53,30 +54,13 @@ impl PartialEq for NoteValue {
 }
 
 #[derive(Copy, Clone, Debug)]
-pub enum PrimitiveNoteDuration {
-    Whole,
-    Half,
-    Quarter,
-    Eighth,
-    Sixteenth,
-    ThirtySecond,
-    SixtyFourth,
-}
-
-#[derive(Copy, Clone, Debug)]
-pub struct NoteDuration {
-    pub primitive: PrimitiveNoteDuration,
-    pub dots: u8,
-}
-
-#[derive(Copy, Clone, Debug)]
 pub struct Note {
     pub value: NoteValue,
-    pub duration: NoteDuration,
+    pub duration: Duration,
 }
 
 impl Note {
-    pub fn new(value: NoteValue, duration: NoteDuration) -> Self {
+    pub fn new(value: NoteValue, duration: Duration) -> Self {
         Self { value, duration }
     }
 }
