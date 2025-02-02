@@ -6,8 +6,8 @@ use crate::duration::PrimitiveDuration;
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimeSignature {
-    pub(crate) notes: u8,
-    pub(crate) beat_value: u8,
+    pub(crate) notes: u64,
+    pub(crate) beat_value: u64,
 }
 
 impl TimeSignature {
@@ -26,12 +26,12 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(2, 2);
     /// assert_eq!(time_signature, TimeSignature::CUT_TIME);
     /// ```
-    pub fn new(notes: u8, beat_value: u8) -> Self {
+    pub fn new(notes: u64, beat_value: u64) -> Self {
         Self { notes, beat_value }
     }
 
-    pub fn simple(beats: u8, value: PrimitiveDuration) -> Self {
-        Self::new(beats, value as u8)
+    pub fn simple(beats: u64, value: PrimitiveDuration) -> Self {
+        Self::new(beats, value.value())
     }
 
     /// Create a compound time signature.
@@ -40,12 +40,12 @@ impl TimeSignature {
     /// ```rust
     /// use note_pen::prelude::*;
     /// // 6/8 time signature
-    /// let time_signature = TimeSignature::compound(2, PrimitiveDuration::Eighth);
+    /// let time_signature = TimeSignature::compound(2, PrimitiveDuration::EIGHTH);
     /// let expected = TimeSignature::new(6, 8);
     /// assert_eq!(time_signature, expected);
     /// ```
-    pub fn compound(beats: u8, value: PrimitiveDuration) -> Self {
-        Self::new(beats * 3, value as u8)
+    pub fn compound(beats: u64, value: PrimitiveDuration) -> Self {
+        Self::new(beats * 3, value.value())
     }
 
     /// Check if the time signature is compound.
@@ -82,7 +82,7 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(4, 4);
     /// assert_eq!(time_signature.beats(), 4);
     /// ```
-    pub fn beats(&self) -> u8 {
+    pub fn beats(&self) -> u64 {
         if self.is_compound() {
             self.notes / 3
         } else {
@@ -95,9 +95,9 @@ impl TimeSignature {
     /// ```rust
     /// use note_pen::prelude::*;
     /// let time_signature = TimeSignature::new(6, 8);
-    /// assert_eq!(time_signature.value(), PrimitiveDuration::Eighth);
+    /// assert_eq!(time_signature.value(), PrimitiveDuration::EIGHTH);
     /// let time_signature = TimeSignature::new(4, 4);
-    /// assert_eq!(time_signature.value(), PrimitiveDuration::Quarter);
+    /// assert_eq!(time_signature.value(), PrimitiveDuration::QUARTER);
     /// ```
     pub fn value(&self) -> PrimitiveDuration {
         PrimitiveDuration::try_from(self.beat_value).expect("Invalid time signature value")
