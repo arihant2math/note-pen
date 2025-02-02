@@ -33,11 +33,11 @@ impl Add<NoteValue> for Accidental {
 
     fn add(self, rhs: NoteValue) -> Self::Output {
         match self {
-            Self::DoubleFlat => rhs.decrement().decrement(),
+            Self::DoubleFlat => rhs.decrement_by(2),
             Self::Flat => rhs.decrement(),
             Self::Natural => rhs,
             Self::Sharp => rhs.increment(),
-            Self::DoubleSharp => rhs.increment().increment(),
+            Self::DoubleSharp => rhs.increment_by(2),
         }
     }
 }
