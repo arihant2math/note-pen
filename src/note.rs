@@ -116,6 +116,13 @@ impl Sub for NoteValue {
     }
 }
 
+impl Sub<Interval> for NoteValue {
+    type Output = NoteValue;
+    fn sub(self, interval: Interval) -> NoteValue {
+        NoteValue::from_id(self.id() - interval.0 as i64)
+    }
+}
+
 #[cfg(test)]
 mod sub_tests {
     #[test]
