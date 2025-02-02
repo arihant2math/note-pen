@@ -10,17 +10,19 @@ mod rest;
 pub mod score;
 pub mod solfege;
 mod time_signature;
+mod tonality;
 
 pub use accidental::Accidental;
 pub use alphabet::Alphabet;
 pub use part::Part;
 pub use rest::Rest;
 pub use time_signature::TimeSignature;
+pub use tonality::Tonality;
 
 pub(crate) use prelude::*;
 
 pub mod prelude {
-    pub use crate::{Accidental, Alphabet, Part, Rest, TimeSignature};
+    pub use crate::{Accidental, Alphabet, Part, Rest, TimeSignature, Tonality};
     pub use crate::chord::{Chord, Inversion};
     pub use crate::duration::{PrimitiveDuration, Duration};
     pub use crate::note::{NoteValue, Note};
