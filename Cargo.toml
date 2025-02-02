@@ -5,5 +5,7 @@ edition = "2021"
 authors = ["Ashwin Naren <arihant2math@gmail.com>"]
 description = "A library to represent musical concepts in Rust"
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/arihant2math/note-pen"
 
 [dependencies]
