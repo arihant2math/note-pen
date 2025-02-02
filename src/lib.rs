@@ -10,6 +10,7 @@ pub mod phrase;
 mod rest;
 pub mod score;
 pub mod solfege;
+pub mod time;
 mod time_signature;
 mod tonality;
 
