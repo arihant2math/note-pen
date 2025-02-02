@@ -1,5 +1,5 @@
 use std::ops::Add;
-use crate::note::NoteValue;
+use crate::note::Note;
 
 /// Represents an accidental.
 ///
@@ -7,10 +7,10 @@ use crate::note::NoteValue;
 /// ```rust
 /// use note_pen::prelude::*;
 /// let sharp = Accidental::Sharp;
-/// let note = NoteValue::new(Alphabet::A, sharp, 4);
+/// let note = Note::new(Alphabet::A, sharp, 4);
 /// let next_note = sharp + note;
-/// assert_eq!(next_note, NoteValue::new(Alphabet::A, Accidental::DoubleSharp, 4));
-/// assert_eq!(sharp + note, NoteValue::new(Alphabet::B, Accidental::default(), 4));
+/// assert_eq!(next_note, Note::new(Alphabet::A, Accidental::DoubleSharp, 4));
+/// assert_eq!(sharp + note, Note::new(Alphabet::B, Accidental::default(), 4));
 /// ```
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -28,10 +28,10 @@ impl Default for Accidental {
     }
 }
 
-impl Add<NoteValue> for Accidental {
-    type Output = NoteValue;
+impl Add<Note> for Accidental {
+    type Output = Note;
 
-    fn add(self, rhs: NoteValue) -> Self::Output {
+    fn add(self, rhs: Note) -> Self::Output {
         match self {
             Self::DoubleFlat => rhs.decrement_by(2),
             Self::Flat => rhs.decrement(),

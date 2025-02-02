@@ -1,6 +1,7 @@
 use indexmap::IndexMap;
 use uuid::Uuid;
 use crate::chord::Chord;
+use crate::duration::Duration;
 use crate::key_signature::KeySignature;
 use crate::note::Note;
 use crate::rest::Rest;
@@ -27,14 +28,25 @@ pub struct ExtendedModifier {
 pub enum InnerTimedPhraseItem {
     Chord(Chord),
     Note(Note),
-    Rest(Rest),
+    Rest,
 }
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimedPhraseItem {
     pub inner: InnerTimedPhraseItem,
+    pub duration: Duration,
     pub modifiers: Vec<Modifier>,
+}
+
+impl From<Rest> for TimedPhraseItem {
+    fn from(rest: Rest) -> Self {
+        Self {
+            inner: InnerTimedPhraseItem::Rest,
+            duration: rest.0,
+            modifiers: vec![],
+        }
+    }
 }
 
 #[derive(Clone)]

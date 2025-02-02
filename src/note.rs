@@ -1,16 +1,15 @@
 use std::ops::{Add, Sub};
 use crate::{Accidental, Alphabet, Interval};
-use crate::duration::Duration;
 
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct NoteValue {
+pub struct Note {
     pub alphabet: Alphabet,
     pub accidental: Accidental,
     pub octave: u8,
 }
 
-impl NoteValue {
+impl Note {
     pub fn new(alphabet: Alphabet, accidental: Accidental, octave: u8) -> Self {
         Self {
             alphabet,
@@ -96,30 +95,30 @@ impl NoteValue {
     }
 }
 
-impl PartialEq for NoteValue {
+impl PartialEq for Note {
     fn eq(&self, other: &Self) -> bool {
         self.id() == other.id()
     }
 }
 
-impl Add<Interval> for NoteValue {
-    type Output = NoteValue;
-    fn add(self, interval: Interval) -> NoteValue {
-        NoteValue::from_id(self.id() + interval.0 as i64)
+impl Add<Interval> for Note {
+    type Output = Note;
+    fn add(self, interval: Interval) -> Note {
+        Note::from_id(self.id() + interval.0 as i64)
     }
 }
 
-impl Sub for NoteValue {
+impl Sub for Note {
     type Output = Interval;
     fn sub(self, other: Self) -> Interval {
         Interval((self.id() - other.id()) as u8)
     }
 }
 
-impl Sub<Interval> for NoteValue {
-    type Output = NoteValue;
-    fn sub(self, interval: Interval) -> NoteValue {
-        NoteValue::from_id(self.id() - interval.0 as i64)
+impl Sub<Interval> for Note {
+    type Output = Note;
+    fn sub(self, interval: Interval) -> Note {
+        Note::from_id(self.id() - interval.0 as i64)
     }
 }
 
@@ -127,16 +126,16 @@ impl Sub<Interval> for NoteValue {
 mod ops_tests {
     #[test]
     fn test_add() {
-        use super::{Accidental, Alphabet, NoteValue};
+        use super::{Accidental, Alphabet, Note};
         use crate::Interval;
 
-        let a = NoteValue::new(Alphabet::A, Accidental::Natural, 4);
-        let b = NoteValue::new(Alphabet::B, Accidental::Natural, 4);
-        let c = NoteValue::new(Alphabet::C, Accidental::Natural, 4);
-        let d = NoteValue::new(Alphabet::D, Accidental::Natural, 4);
-        let e = NoteValue::new(Alphabet::E, Accidental::Natural, 4);
-        let f = NoteValue::new(Alphabet::F, Accidental::Natural, 4);
-        let g = NoteValue::new(Alphabet::G, Accidental::Natural, 4);
+        let a = Note::new(Alphabet::A, Accidental::Natural, 4);
+        let b = Note::new(Alphabet::B, Accidental::Natural, 4);
+        let c = Note::new(Alphabet::C, Accidental::Natural, 4);
+        let d = Note::new(Alphabet::D, Accidental::Natural, 4);
+        let e = Note::new(Alphabet::E, Accidental::Natural, 4);
+        let f = Note::new(Alphabet::F, Accidental::Natural, 4);
+        let g = Note::new(Alphabet::G, Accidental::Natural, 4);
 
         assert_eq!(a + Interval::MAJOR_SECOND, b);
         assert_eq!(a + Interval::MAJOR_THIRD, c);
@@ -148,16 +147,16 @@ mod ops_tests {
 
     #[test]
     fn test_sub_note_note() {
-        use super::{Accidental, Alphabet, NoteValue};
+        use super::{Accidental, Alphabet, Note};
         use crate::Interval;
 
-        let a = NoteValue::new(Alphabet::A, Accidental::Natural, 4);
-        let b = NoteValue::new(Alphabet::B, Accidental::Natural, 4);
-        let c = NoteValue::new(Alphabet::C, Accidental::Natural, 4);
-        let d = NoteValue::new(Alphabet::D, Accidental::Natural, 4);
-        let e = NoteValue::new(Alphabet::E, Accidental::Natural, 4);
-        let f = NoteValue::new(Alphabet::F, Accidental::Natural, 4);
-        let g = NoteValue::new(Alphabet::G, Accidental::Natural, 4);
+        let a = Note::new(Alphabet::A, Accidental::Natural, 4);
+        let b = Note::new(Alphabet::B, Accidental::Natural, 4);
+        let c = Note::new(Alphabet::C, Accidental::Natural, 4);
+        let d = Note::new(Alphabet::D, Accidental::Natural, 4);
+        let e = Note::new(Alphabet::E, Accidental::Natural, 4);
+        let f = Note::new(Alphabet::F, Accidental::Natural, 4);
+        let g = Note::new(Alphabet::G, Accidental::Natural, 4);
 
         assert_eq!(b - a, Interval::MAJOR_SECOND);
         assert_eq!(c - a, Interval::MINOR_THIRD);
@@ -168,42 +167,29 @@ mod ops_tests {
     }
 }
 
-#[derive(Copy, Clone, Debug)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Note {
-    pub value: NoteValue,
-    pub duration: Duration,
-}
-
-impl Note {
-    pub fn new(value: NoteValue, duration: Duration) -> Self {
-        Self { value, duration }
-    }
-}
-
 #[cfg(test)]
 mod test {
     #[test]
     fn test_enharmonic() {
-        use super::{Accidental, Alphabet, NoteValue};
+        use super::{Accidental, Alphabet, Note};
 
-        let a_sharp = NoteValue::new(Alphabet::A, Accidental::Sharp, 4);
-        let b_flat = NoteValue::new(Alphabet::B, Accidental::Flat, 4);
+        let a_sharp = Note::new(Alphabet::A, Accidental::Sharp, 4);
+        let b_flat = Note::new(Alphabet::B, Accidental::Flat, 4);
         assert_eq!(a_sharp, b_flat);
 
-        let c_sharp = NoteValue::new(Alphabet::C, Accidental::Sharp, 4);
-        let d_flat = NoteValue::new(Alphabet::D, Accidental::Flat, 4);
+        let c_sharp = Note::new(Alphabet::C, Accidental::Sharp, 4);
+        let d_flat = Note::new(Alphabet::D, Accidental::Flat, 4);
         assert_eq!(c_sharp, d_flat);
     }
 
     #[test]
     fn test_edge_cases() {
-        use super::{Accidental, Alphabet, NoteValue};
+        use super::{Accidental, Alphabet, Note};
 
-        let b = NoteValue::new(Alphabet::B, Accidental::Natural, 4);
-        let b_sharp = NoteValue::new(Alphabet::B, Accidental::Sharp, 4);
-        let c = NoteValue::new(Alphabet::C, Accidental::Natural, 4);
-        let c_flat = NoteValue::new(Alphabet::C, Accidental::Flat, 4);
+        let b = Note::new(Alphabet::B, Accidental::Natural, 4);
+        let b_sharp = Note::new(Alphabet::B, Accidental::Sharp, 4);
+        let c = Note::new(Alphabet::C, Accidental::Natural, 4);
+        let c_flat = Note::new(Alphabet::C, Accidental::Flat, 4);
 
         assert_eq!(b_sharp, c);
         assert_eq!(b, c_flat);
