@@ -147,7 +147,7 @@ mod ops_tests {
         let g = Note::new(Alphabet::G, Accidental::Natural, 4);
 
         assert_eq!(a + Interval::MAJOR_SECOND, b);
-        assert_eq!(a + Interval::MAJOR_THIRD, c);
+        assert_eq!(a + Interval::MINOR_THIRD, c);
         assert_eq!(a + Interval::PERFECT_FOURTH, d);
         assert_eq!(a + Interval::PERFECT_FIFTH, e);
         assert_eq!(a + Interval::MINOR_SIXTH, f);

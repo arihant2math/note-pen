@@ -49,7 +49,7 @@ impl Chord {
     /// # Examples
     /// ```rust
     /// use note_pen::prelude::*;
-    /// let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
+    /// let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4));
     /// assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
     ///   Note::new(Alphabet::E, Accidental::Natural, 4) +
     ///  Note::new(Alphabet::G, Accidental::Natural, 4)
@@ -84,5 +84,11 @@ impl Add<Note> for Chord {
         let mut notes = self.notes;
         notes.push(note);
         Chord { notes }
+    }
+}
+
+impl PartialEq for Chord {
+    fn eq(&self, other: &Self) -> bool {
+        self.notes == other.notes
     }
 }
