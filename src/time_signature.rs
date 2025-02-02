@@ -50,7 +50,7 @@ impl TimeSignature {
     }
 
     pub fn value(&self) -> PrimitiveDuration {
-        self.beat_value.into()
+        PrimitiveDuration::try_from(self.beat_value).expect("Invalid time signature value")
     }
 }
 
