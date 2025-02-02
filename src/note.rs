@@ -124,9 +124,30 @@ impl Sub<Interval> for NoteValue {
 }
 
 #[cfg(test)]
-mod sub_tests {
+mod ops_tests {
     #[test]
-    fn test_sub() {
+    fn test_add() {
+        use super::{Accidental, Alphabet, NoteValue};
+        use crate::Interval;
+
+        let a = NoteValue::new(Alphabet::A, Accidental::Natural, 4);
+        let b = NoteValue::new(Alphabet::B, Accidental::Natural, 4);
+        let c = NoteValue::new(Alphabet::C, Accidental::Natural, 4);
+        let d = NoteValue::new(Alphabet::D, Accidental::Natural, 4);
+        let e = NoteValue::new(Alphabet::E, Accidental::Natural, 4);
+        let f = NoteValue::new(Alphabet::F, Accidental::Natural, 4);
+        let g = NoteValue::new(Alphabet::G, Accidental::Natural, 4);
+
+        assert_eq!(a + Interval::MAJOR_SECOND, b);
+        assert_eq!(a + Interval::MAJOR_THIRD, c);
+        assert_eq!(a + Interval::PERFECT_FOURTH, d);
+        assert_eq!(a + Interval::PERFECT_FIFTH, e);
+        assert_eq!(a + Interval::MINOR_SIXTH, f);
+        assert_eq!(a + Interval::MINOR_SEVENTH, g);
+    }
+
+    #[test]
+    fn test_sub_note_note() {
         use super::{Accidental, Alphabet, NoteValue};
         use crate::Interval;
 
@@ -139,7 +160,7 @@ mod sub_tests {
         let g = NoteValue::new(Alphabet::G, Accidental::Natural, 4);
 
         assert_eq!(b - a, Interval::MAJOR_SECOND);
-        assert_eq!(c - a, Interval::MAJOR_THIRD);
+        assert_eq!(c - a, Interval::MINOR_THIRD);
         assert_eq!(d - a, Interval::PERFECT_FOURTH);
         assert_eq!(e - a, Interval::PERFECT_FIFTH);
         assert_eq!(f - a, Interval::MINOR_SIXTH);
