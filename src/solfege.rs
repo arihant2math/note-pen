@@ -1,7 +1,7 @@
 use crate::Alphabet;
 
 #[derive(Copy, Clone, Debug)]
-pub enum Syllable {
+pub enum SolfegeSyllable {
     Do,
     Di,
     Ra,
@@ -21,7 +21,7 @@ pub enum Syllable {
     Ti,
 }
 
-impl Syllable {
+impl SolfegeSyllable {
     pub fn into_u8(self) -> u8 {
         match self {
             Self::Do => 0,
@@ -98,12 +98,12 @@ pub struct Moveable(Alphabet);
 pub const Fixed: Moveable = Moveable(Alphabet::C);
 
 pub struct Solfege {
-    pub syllable: Syllable,
+    pub syllable: SolfegeSyllable,
     pub kind: Moveable,
 }
 
 impl Solfege {
-    pub fn new(syllable: Syllable, kind: Moveable) -> Self {
+    pub fn new(syllable: SolfegeSyllable, kind: Moveable) -> Self {
         Self { syllable, kind }
     }
 
