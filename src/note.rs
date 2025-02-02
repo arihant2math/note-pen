@@ -46,6 +46,41 @@ impl NoteValue {
         let octave = (self.octave as i64 - 4) * 12;
         offset + accidental + octave
     }
+
+    pub fn from_id(id: i64) -> Self {
+        let octave = id / 12 + 4;
+        let id = id % 12;
+        let (alphabet, accidental) = match id {
+            0 => (Alphabet::A, Accidental::Natural),
+            1 => (Alphabet::A, Accidental::Sharp),
+            2 => (Alphabet::B, Accidental::Natural),
+            3 => (Alphabet::C, Accidental::Natural),
+            4 => (Alphabet::C, Accidental::Sharp),
+            5 => (Alphabet::D, Accidental::Natural),
+            6 => (Alphabet::D, Accidental::Sharp),
+            7 => (Alphabet::E, Accidental::Natural),
+            8 => (Alphabet::F, Accidental::Natural),
+            9 => (Alphabet::F, Accidental::Sharp),
+            10 => (Alphabet::G, Accidental::Natural),
+            11 => (Alphabet::G, Accidental::Sharp),
+            _ => unreachable!(),
+        };
+        Self {
+            alphabet,
+            accidental,
+            octave: octave as u8,
+        }
+    }
+
+    /// Increments the note by one half-step.
+    pub fn increment(&self) -> Self {
+        Self::from_id(self.id() + 1)
+    }
+
+    /// Decrements the note by one half-step.
+    pub fn decrement(&self) -> Self {
+        Self::from_id(self.id() - 1)
+    }
 }
 
 impl PartialEq for NoteValue {
