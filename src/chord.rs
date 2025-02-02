@@ -1,5 +1,6 @@
 use crate::duration::Duration;
 use crate::note::NoteValue;
+use crate::{Interval, Tonality};
 
 /// A chord is a collection of notes that are played simultaneously for the same duration.
 #[derive(Clone, Debug)]
@@ -45,87 +46,37 @@ impl Chord {
         }
     }
 
-    /// Creates a major triad with a given root.
-    ///
-    /// A major triad is a chord consisting of a root note, a major third, and a minor third.
+    /// Creates a trait with a given tonality, root, and duration.
     ///
     /// # Examples
     /// ```rust
     /// use note_pen::prelude::*;
-    /// let chord = Chord::major_triad_from_root(NoteValue::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
+    /// let chord = Chord::triad_from_root(Tonality::Major, NoteValue::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
     /// assert_eq!(chord.notes, vec![
     ///    NoteValue::new(Alphabet::C, Accidental::Natural, 4),
     ///   NoteValue::new(Alphabet::E, Accidental::Natural, 4),
     ///  NoteValue::new(Alphabet::G, Accidental::Natural, 4),
     /// ]);
-    pub fn major_triad_from_root(root: NoteValue, duration: Duration) -> Self {
-        let third = root.increment_by(4);
-        let fifth = third.increment_by(3);
-        Self {
-            duration,
-            notes: vec![root, third, fifth],
+    pub fn triad_from_root(tonality: Tonality, root: NoteValue, duration: Duration) -> Self {
+        let mut notes = vec![root];
+        match tonality {
+            Tonality::Major => {
+                notes.push(root + Interval::MAJOR_THIRD);
+                notes.push(root + Interval::PERFECT_FIFTH);
+            }
+            Tonality::Minor => {
+                notes.push(root + Interval::MINOR_THIRD);
+                notes.push(root + Interval::PERFECT_FIFTH);
+            }
+            Tonality::Diminished => {
+                notes.push(root + Interval::MINOR_THIRD);
+                notes.push(root + Interval::TRITONE);
+            }
+            Tonality::Augmented => {
+                notes.push(root + Interval::MAJOR_THIRD);
+                notes.push(root + Interval::AUGMENTED_FIFTH);
+            }
         }
-    }
-
-    /// Creates a minor triad with a given root.
-    /// A minor triad is a chord consisting of a root note, a minor third, and a major third.
-    /// # Examples
-    /// ```rust
-    /// use note_pen::prelude::*;
-    /// let chord = Chord::minor_triad_from_root(NoteValue::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
-    /// assert_eq!(chord.notes, vec![
-    ///     NoteValue::new(Alphabet::C, Accidental::Natural, 4),
-    ///     NoteValue::new(Alphabet::E, Accidental::Flat, 4),
-    ///     NoteValue::new(Alphabet::G, Accidental::Natural, 4),
-    /// ]);
-    pub fn minor_triad_from_root(root: NoteValue, duration: Duration) -> Self {
-        let third = root.increment_by(3);
-        let fifth = third.increment_by(4);
-        Self {
-            duration,
-            notes: vec![root, third, fifth],
-        }
-    }
-
-    /// Creates a diminished triad with a given root.
-    /// A diminished triad is a chord consisting of a root note, a minor third, and a minor third.
-    /// # Examples
-    /// ```rust
-    /// use note_pen::prelude::*;
-    /// let chord = Chord::diminished_triad_from_root(NoteValue::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
-    /// assert_eq!(chord.notes, vec![
-    ///    NoteValue::new(Alphabet::C, Accidental::Natural, 4),
-    ///   NoteValue::new(Alphabet::E, Accidental::Flat, 4),
-    /// NoteValue::new(Alphabet::G, Accidental::Flat, 4),
-    /// ]);
-    /// ```
-    pub fn diminished_triad_from_root(root: NoteValue, duration: Duration) -> Self {
-        let third = root.increment_by(3);
-        let fifth = third.increment_by(3);
-        Self {
-            duration,
-            notes: vec![root, third, fifth],
-        }
-    }
-
-    /// Creates an augmented triad with a given root.
-    /// An augmented triad is a chord consisting of a root note, a major third, and a major third.
-    /// # Examples
-    /// ```rust
-    /// use note_pen::prelude::*;
-    /// let chord = Chord::augmented_triad_from_root(NoteValue::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
-    /// assert_eq!(chord.notes, vec![
-    ///   NoteValue::new(Alphabet::C, Accidental::Natural, 4),
-    /// NoteValue::new(Alphabet::E, Accidental::Natural, 4),
-    /// NoteValue::new(Alphabet::G, Accidental::Sharp, 4),
-    /// ]);
-    /// ```
-    pub fn augmented_triad_from_root(root: NoteValue, duration: Duration) -> Self {
-        let third = root.increment_by(4);
-        let fifth = third.increment_by(4);
-        Self {
-            duration,
-            notes: vec![root, third, fifth],
-        }
+        Self { duration, notes }
     }
 }
