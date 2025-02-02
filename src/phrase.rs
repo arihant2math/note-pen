@@ -4,9 +4,15 @@ use crate::chord::Chord;
 use crate::duration::Duration;
 use crate::key_signature::KeySignature;
 use crate::note::Note;
-use crate::rest::Rest;
+use crate::time::{BeatFraction, Measure};
 use crate::time_signature::TimeSignature;
 
+
+/// A modifier that can be applied to a phrase item.
+/// This can include accents, staccatos, etc. or directions like dolce.
+/// Even dynamics like forte and piano should be included here.
+/// This should **not** include markings that extent over multiple items,
+/// like crescendo or decrescendo.
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Modifier {
@@ -37,30 +43,30 @@ pub struct TimedPhraseItem {
     pub inner: InnerTimedPhraseItem,
     pub duration: Duration,
     pub modifiers: Vec<Modifier>,
-}
-
-impl From<Rest> for TimedPhraseItem {
-    fn from(rest: Rest) -> Self {
-        Self {
-            inner: InnerTimedPhraseItem::Rest,
-            duration: rest.0,
-            modifiers: vec![],
-        }
-    }
+    pub anchor: BeatFraction
 }
 
 #[derive(Clone)]
 #[non_exhaustive]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum PhraseItem {
+    /// A note, chord, or rest with a duration and anchor.
     Timed(TimedPhraseItem),
+    /// Key signature change at the start of the measure.
     KeySignature(KeySignature),
-    TimeSignature(TimeSignature),
-    Barline,
-    StartRepeat,
-    EndRepeat,
-    End,
+    /// Time signature change at the start of the measure.
+    TimeSignature(TimeSignature, Measure),
+    /// Start measure
+    Barline(Measure),
+    /// Which measure to repeat start the repeat at.
+    StartRepeat(Measure),
+    /// Which measure to end the repeat at.
+    EndRepeat(Measure),
+    /// Which measure to end the piece at.
+    End(Measure),
+    /// Start of a modifier.
     StartExtendedModifier(ExtendedModifier),
+    /// End of a modifier.
     EndExtendedModifier(u64),
 }
 
