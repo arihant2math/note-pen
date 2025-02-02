@@ -9,6 +9,8 @@ pub struct Chord {
     pub notes: Vec<NoteValue>,
 }
 
+/// An inversion is a way to rearrange the notes of a chord so that a different note is the lowest note.
+/// Root inversion is stored as 0.
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(transparent)]
