@@ -27,7 +27,7 @@ pub mod prelude {
     pub use crate::{Accidental, Alphabet, Interval, Part, Rest, TimeSignature, Tonality};
     pub use crate::chord::{Chord, Inversion};
     pub use crate::duration::{PrimitiveDuration, Duration};
-    pub use crate::note::{Note, Note};
+    pub use crate::note::Note;
     pub use crate::phrase::{PhraseItem, Phrase};
     pub use crate::score::{Score, ScoreCredit};
     pub use crate::solfege::{SolfegeSyllable, Solfege};

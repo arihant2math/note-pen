@@ -1,5 +1,6 @@
 use std::ops::{Add, Sub};
 use crate::{Accidental, Alphabet, Interval};
+use crate::chord::Chord;
 
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -98,6 +99,14 @@ impl Note {
 impl PartialEq for Note {
     fn eq(&self, other: &Self) -> bool {
         self.id() == other.id()
+    }
+}
+
+impl Add for Note {
+    type Output = Chord;
+
+    fn add(self, other: Self) -> Chord {
+        Chord::new(vec![self, other])
     }
 }
 

@@ -1,4 +1,4 @@
-use crate::duration::Duration;
+use std::ops::Add;
 use crate::note::Note;
 use crate::{Interval, Tonality};
 
@@ -50,11 +50,10 @@ impl Chord {
     /// ```rust
     /// use note_pen::prelude::*;
     /// let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Duration::WHOLE);
-    /// assert_eq!(chord.notes, vec![
-    ///    Note::new(Alphabet::C, Accidental::Natural, 4),
-    ///   Note::new(Alphabet::E, Accidental::Natural, 4),
-    ///  Note::new(Alphabet::G, Accidental::Natural, 4),
-    /// ]);
+    /// assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
+    ///   Note::new(Alphabet::E, Accidental::Natural, 4) +
+    ///  Note::new(Alphabet::G, Accidental::Natural, 4)
+    /// );
     pub fn triad_from_root(tonality: Tonality, root: Note) -> Self {
         let mut notes = vec![root];
         match tonality {
@@ -76,5 +75,14 @@ impl Chord {
             }
         }
         Self { notes }
+    }
+}
+
+impl Add<Note> for Chord {
+    type Output = Chord;
+    fn add(self, note: Note) -> Chord {
+        let mut notes = self.notes;
+        notes.push(note);
+        Chord { notes }
     }
 }
