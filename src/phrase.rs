@@ -1,25 +1,29 @@
-use std::sync::Arc;
+use indexmap::IndexMap;
+use uuid::Uuid;
 use crate::chord::Chord;
 use crate::key_signature::KeySignature;
 use crate::note::Note;
 use crate::rest::Rest;
 use crate::time_signature::TimeSignature;
 
-pub trait Modifier {
-    fn name(&self) -> &str;
-}
-
-
-pub trait ExtendedModifierType {
-    fn name(&self) -> &str;
+#[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Modifier {
+    pub identifier: String,
+    pub name: String,
+    pub data: Vec<u8>,
 }
 
 #[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ExtendedModifier {
-    pub modifier_type: Arc<dyn ExtendedModifierType>,
+    pub identifier: String,
+    pub name: String,
+    pub data: Vec<u8>,
 }
 
 #[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum InnerTimedPhraseItem {
     Chord(Chord),
     Note(Note),
@@ -27,14 +31,16 @@ pub enum InnerTimedPhraseItem {
 }
 
 #[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimedPhraseItem {
     pub inner: InnerTimedPhraseItem,
-    pub modifiers: Vec<Arc<dyn Modifier>>,
+    pub modifiers: Vec<Modifier>,
 }
 
 #[derive(Clone)]
 #[non_exhaustive]
-pub enum InnerPhraseItem {
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum PhraseItem {
     Timed(TimedPhraseItem),
     KeySignature(KeySignature),
     TimeSignature(TimeSignature),
@@ -46,13 +52,39 @@ pub enum InnerPhraseItem {
     EndExtendedModifier(u64),
 }
 
-#[derive(Clone)]
-pub struct PhraseItem {
-    pub inner: InnerPhraseItem,
-    pub(crate) id: u64,
+#[derive(Clone, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Phrase {
+    pub(crate) items: IndexMap<u128, PhraseItem>,
 }
 
-#[derive(Clone)]
-pub struct Phrase {
-    pub items: Vec<PhraseItem>,
+impl Phrase {
+    pub fn push(&mut self, item: PhraseItem) {
+        self.items.insert(Uuid::new_v4().as_u128(), item);
+    }
+
+    pub fn insert(&mut self, index: usize, item: PhraseItem) {
+        self.items.insert(index as u128, item);
+    }
+
+    pub fn remove(&mut self, index: usize) {
+        self.items.shift_remove(&(index as u128));
+    }
+
+    pub fn get(&self, index: usize) -> Option<&PhraseItem> {
+        self.items.get(&(index as u128))
+    }
+
+    pub fn len(&self) -> usize {
+        self.items.len()
+    }
+
+    pub fn get_id(&self, index: usize) -> Option<&PhraseItem> {
+        self.items.get_index(index).map(|(_, d)| d)
+    }
+
+    /// Returns an iterator over the phrase items with their associated ids.
+    pub fn iter(&self) -> impl Iterator<Item=(&u128, &PhraseItem)> {
+        self.items.iter()
+    }
 }

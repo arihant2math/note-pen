@@ -2,6 +2,7 @@ use std::fmt::Display;
 use crate::part::Part;
 
 #[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ScoreCredit {
     pub key: String,
     pub value: Vec<String>,
@@ -14,6 +15,7 @@ impl Display for ScoreCredit {
 }
 
 #[derive(Clone, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Score {
     pub title: Option<String>,
     pub credits: Vec<ScoreCredit>,

@@ -2,6 +2,7 @@ use crate::{Accidental, Alphabet};
 use crate::duration::Duration;
 
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct NoteValue {
     pub alphabet: Alphabet,
     pub accidental: Accidental,
@@ -54,6 +55,7 @@ impl PartialEq for NoteValue {
 }
 
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Note {
     pub value: NoteValue,
     pub duration: Duration,

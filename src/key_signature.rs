@@ -1,6 +1,7 @@
 use crate::alphabet::Alphabet;
 
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct KeySignature {
     pub notes: Vec<Alphabet>,
 }

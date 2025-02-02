@@ -2,6 +2,7 @@ use crate::duration::Duration;
 
 #[derive(Copy, Clone, Debug)]
 #[repr(transparent)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Rest(pub Duration);
 
 impl Rest {

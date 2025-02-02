@@ -1,4 +1,5 @@
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum PrimitiveDuration {
     Whole,
     Half,
@@ -39,6 +40,7 @@ impl Into<u8> for PrimitiveDuration {
 }
 
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Duration {
     pub primitive: PrimitiveDuration,
     pub dots: u8,

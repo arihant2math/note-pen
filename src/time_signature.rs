@@ -1,6 +1,7 @@
 use crate::duration::PrimitiveDuration;
 
 #[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimeSignature {
     pub(crate) notes: u8,
     pub(crate) beat_value: u8,
