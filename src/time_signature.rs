@@ -98,6 +98,7 @@ impl TimeSignature {
     /// assert_eq!(time_signature.value(), PrimitiveDuration::Eighth);
     /// let time_signature = TimeSignature::new(4, 4);
     /// assert_eq!(time_signature.value(), PrimitiveDuration::Quarter);
+    /// ```
     pub fn value(&self) -> PrimitiveDuration {
         PrimitiveDuration::try_from(self.beat_value).expect("Invalid time signature value")
     }
