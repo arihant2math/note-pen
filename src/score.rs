@@ -9,7 +9,7 @@ pub struct ScoreCredit {
 
 impl Display for ScoreCredit {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}: {}", self.key, self.value.join(", "))
+        write!(f, "{} {}", self.key, self.value.join(", "))
     }
 }
 
