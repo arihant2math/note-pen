@@ -21,6 +21,33 @@ pub struct Modifier {
     pub data: Vec<u8>,
 }
 
+impl Modifier {
+    pub fn new(identifier: String, name: String, data: Vec<u8>) -> Self {
+        Self {
+            identifier,
+            name,
+            data,
+        }
+    }
+
+    /// Predefined method to define dynamics.
+    /// This includes forte, piano, etc.
+    /// but not crescendo or decrescendo.
+    pub fn dynamic(name: &str) -> Self {
+        Self::new("dynamic".to_string(), "Dynamic".to_string(), name.as_bytes().to_vec())
+    }
+
+    /// Predefined method to define text.
+    ///
+    /// This includes dolce, poco a poco, etc.
+    ///
+    /// This should **not** include lyrics or tempo indications
+    /// like ritardando.
+    pub fn text(text: &str) -> Self {
+        Self::new("text".to_string(), "Text".to_string(), text.as_bytes().to_vec())
+    }
+}
+
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ExtendedModifier {
