@@ -1,28 +1,30 @@
-pub mod accidental;
-pub mod alphabet;
-pub mod chord;
+mod accidental;
+mod alphabet;
+mod chord;
 pub mod duration;
 pub mod key_signature;
 pub mod note;
-pub mod part;
+mod part;
 pub mod phrase;
-pub mod rest;
+mod rest;
 pub mod score;
 pub mod solfege;
-pub mod time_signature;
+mod time_signature;
+
+pub use accidental::Accidental;
+pub use alphabet::Alphabet;
+pub use chord::Chord;
+pub use part::Part;
+pub use rest::Rest;
+pub use time_signature::TimeSignature;
 
 pub(crate) use prelude::*;
 
 pub mod prelude {
-    pub use crate::accidental::Accidental;
-    pub use crate::alphabet::Alphabet;
-    pub use crate::chord::Chord;
+    pub use crate::{Accidental, Alphabet, Chord, Part, Rest, TimeSignature};
     pub use crate::duration::{PrimitiveDuration, Duration};
     pub use crate::note::{NoteValue, Note};
-    pub use crate::part::Part;
     pub use crate::phrase::{PhraseItem, Phrase};
-    pub use crate::rest::Rest;
     pub use crate::score::{Score, ScoreCredit};
-    pub use crate::solfege::Solfege;
-    pub use crate::time_signature::TimeSignature;
+    pub use crate::solfege::{SolfegeSyllable, Solfege};
 }
