@@ -1,3 +1,5 @@
+/// An interval is the absolute difference in pitch between two notes.
+///
 /// The interval is simply internally the number of half-steps between two notes.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

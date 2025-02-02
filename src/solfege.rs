@@ -1,3 +1,4 @@
+//! Solfège is a system of attributing a distinct syllable to each note in a musical scale.
 use crate::Alphabet;
 
 #[derive(Copy, Clone, Debug)]

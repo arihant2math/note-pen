@@ -1,3 +1,5 @@
+//! Time-related types for scores including relative time and speed.
+
 use crate::duration::PrimitiveDuration;
 
 #[derive(Debug, Clone, Copy)]

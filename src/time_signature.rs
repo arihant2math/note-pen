@@ -2,6 +2,7 @@ use crate::duration::PrimitiveDuration;
 
 
 /// Represents a time signature.
+///
 /// Internally, it stores the number of notes in a measure and the beat value.
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

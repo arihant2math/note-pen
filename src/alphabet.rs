@@ -1,6 +1,7 @@
 use std::fmt::{Debug, Display};
 
 /// Represents an alphabet of the musical alphabet (A-G).
+///
 /// This should not be used to represent a pitch.
 /// For relative pitches [Solfege](crate::solfege::Solfege) should be used.
 /// For absolute pitches [NoteValue](crate::note::Note) should be used.
