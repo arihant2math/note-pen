@@ -6,11 +6,13 @@ use crate::duration::Duration;
 pub struct Rest(pub Duration);
 
 impl Rest {
-    pub fn new(duration: Duration) -> Self {
+    #[inline]
+    pub const fn new(duration: Duration) -> Self {
         Self(duration)
     }
 
-    pub fn duration(&self) -> Duration {
+    #[inline]
+    pub const fn duration(&self) -> Duration {
         self.0
     }
 }

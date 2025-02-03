@@ -10,11 +10,13 @@ pub struct Tempo {
 }
 
 impl Tempo {
-    pub fn new(bpm: f64) -> Self {
+    #[inline]
+    pub const fn new(bpm: f64) -> Self {
         Self { bpm }
     }
 
-    pub fn value(&self) -> f64 {
+    #[inline]
+    pub const fn value(&self) -> f64 {
         self.bpm
     }
 }
@@ -25,11 +27,13 @@ impl Tempo {
 pub struct Measure(pub usize);
 
 impl Measure {
-    pub fn new(measure: usize) -> Self {
+    #[inline]
+    pub const fn new(measure: usize) -> Self {
         Self(measure)
     }
 
-    pub fn value(&self) -> usize {
+    #[inline]
+    pub const fn value(&self) -> usize {
         self.0
     }
 }
@@ -40,11 +44,13 @@ impl Measure {
 pub struct Beat(pub usize);
 
 impl Beat {
-    pub fn new(beat: usize) -> Self {
+    #[inline]
+    pub const fn new(beat: usize) -> Self {
         Self(beat)
     }
 
-    pub fn value(&self) -> usize {
+    #[inline]
+    pub const fn value(&self) -> usize {
         self.0
     }
 }
@@ -57,13 +63,15 @@ pub struct BeatFraction {
 }
 
 impl BeatFraction {
-    pub fn new(numerator: usize, denominator: PrimitiveDuration) -> Self {
+    #[inline]
+    pub const fn new(numerator: usize, denominator: PrimitiveDuration) -> Self {
         Self {
             numerator,
             denominator,
         }
     }
 
+    #[inline]
     pub fn simplify(&self) -> Self {
         let mut numerator = self.numerator;
         let mut denominator = self.denominator;

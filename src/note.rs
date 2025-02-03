@@ -23,7 +23,7 @@ impl Note {
     /// # Compatability
     /// This method might not return the same exact value from release to release,
     /// however, it is guaranteed to be an enharmonic equivalent to the supplied note.
-    pub fn simplify(&self) -> Self {
+    pub const fn simplify(&self) -> Self {
         match self.accidental {
             Accidental::Natural | Accidental::Flat | Accidental::Sharp => *self,
             Accidental::DoubleFlat | Accidental::DoubleSharp => Self::from_id(self.id()),
@@ -31,7 +31,7 @@ impl Note {
     }
 
     /// Returns the number of half-steps from A4.
-    pub fn id(&self) -> i64 {
+    pub const fn id(&self) -> i64 {
         let offset = match self.alphabet {
             Alphabet::A => 0,
             Alphabet::B => 2,
@@ -52,7 +52,7 @@ impl Note {
         offset + accidental + octave
     }
 
-    pub fn from_id(id: i64) -> Self {
+    pub const fn from_id(id: i64) -> Self {
         let octave = id / 12 + 4;
         let id = id % 12;
         let (alphabet, accidental) = match id {
@@ -78,20 +78,24 @@ impl Note {
     }
 
     /// Increments the note by one half-step.
-    pub fn increment(&self) -> Self {
+    #[inline]
+    pub const fn increment(&self) -> Self {
         Self::from_id(self.id() + 1)
     }
 
     /// Decrements the note by one half-step.
-    pub fn decrement(&self) -> Self {
+    #[inline]
+    pub const fn decrement(&self) -> Self {
         Self::from_id(self.id() - 1)
     }
 
-    pub fn increment_by(&self, steps: i64) -> Self {
+    #[inline]
+    pub const fn increment_by(&self, steps: i64) -> Self {
         Self::from_id(self.id() + steps)
     }
 
-    pub fn decrement_by(&self, steps: i64) -> Self {
+    #[inline]
+    pub const fn decrement_by(&self, steps: i64) -> Self {
         Self::from_id(self.id() - steps)
     }
 }

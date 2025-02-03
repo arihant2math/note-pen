@@ -111,26 +111,32 @@ pub struct Phrase {
 }
 
 impl Phrase {
+    #[inline]
     pub fn push(&mut self, item: PhraseItem) {
         self.items.insert(Uuid::new_v4().as_u128(), item);
     }
 
+    #[inline]
     pub fn insert(&mut self, index: usize, item: PhraseItem) {
         self.items.insert(index as u128, item);
     }
 
+    #[inline]
     pub fn remove(&mut self, index: usize) {
         self.items.shift_remove(&(index as u128));
     }
 
+    #[inline]
     pub fn get(&self, index: usize) -> Option<&PhraseItem> {
         self.items.get(&(index as u128))
     }
 
+    #[inline]
     pub fn len(&self) -> usize {
         self.items.len()
     }
 
+    #[inline]
     pub fn get_id(&self, index: usize) -> Option<&PhraseItem> {
         self.items.get_index(index).map(|(_, d)| d)
     }

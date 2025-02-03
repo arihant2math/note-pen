@@ -25,12 +25,15 @@ impl KeySignature {
         Alphabet::C,
         Alphabet::F,
     ];
+
+    #[inline]
     pub fn new_sharp(n: u8) -> Self {
         Self {
             notes: Self::SHARP_ORDER.iter().take(n as usize).copied().collect(),
         }
     }
 
+    #[inline]
     pub fn new_flat(n: u8) -> Self {
         Self {
             notes: Self::FLAT_ORDER.iter().take(n as usize).copied().collect(),

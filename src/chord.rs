@@ -43,7 +43,7 @@ impl Inversion {
 
 impl Chord {
     /// Creates a new chord with the given notes.
-    pub fn new(notes: Vec<Note>) -> Self {
+    pub const fn new(notes: Vec<Note>) -> Self {
         Self { notes }
     }
 

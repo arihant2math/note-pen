@@ -23,7 +23,7 @@ pub enum SolfegeSyllable {
 }
 
 impl SolfegeSyllable {
-    pub fn into_u8(self) -> u8 {
+    pub const fn into_u8(self) -> u8 {
         match self {
             Self::Do => 0,
             Self::Di => 1,
@@ -45,7 +45,7 @@ impl SolfegeSyllable {
         }
     }
 
-    pub fn decrement(&self) -> Self {
+    pub const fn decrement(&self) -> Self {
         match self {
             Self::Do => Self::Ti,
             Self::Di => Self::Do,
@@ -67,7 +67,7 @@ impl SolfegeSyllable {
         }
     }
 
-    pub fn increment(&self) -> Self {
+    pub const fn increment(&self) -> Self {
         match self {
             Self::Do => Self::Di,
             Self::Di => Self::Re,
@@ -104,11 +104,13 @@ pub struct Solfege {
 }
 
 impl Solfege {
-    pub fn new(syllable: SolfegeSyllable, kind: Moveable) -> Self {
+    #[inline]
+    pub const fn new(syllable: SolfegeSyllable, kind: Moveable) -> Self {
         Self { syllable, kind }
     }
 
-    pub fn id(&self) -> u8 {
+    #[inline]
+    pub const fn id(&self) -> u8 {
         self.kind.0 as u8 + self.syllable.into_u8()
     }
 }

@@ -27,7 +27,8 @@ impl PrimitiveDuration {
     pub const THIRTY_SECOND: Self = Self(32);
     pub const SIXTY_FOURTH: Self = Self(64);
 
-    pub fn value(&self) -> u64 {
+    #[inline]
+    pub const fn value(&self) -> u64 {
         self.0
     }
 
@@ -38,7 +39,8 @@ impl PrimitiveDuration {
     /// use note_pen::prelude::*;
     /// assert_eq!(PrimitiveDuration::WHOLE.half(), PrimitiveDuration::HALF);
     /// ```
-    pub fn half(&self) -> Self {
+    #[inline]
+    pub const fn half(&self) -> Self {
         Self(self.0 * 2)
     }
 
@@ -49,7 +51,8 @@ impl PrimitiveDuration {
     /// use note_pen::prelude::*;
     /// assert_eq!(PrimitiveDuration::HALF.double(), PrimitiveDuration::WHOLE);
     /// ```
-    pub fn double(&self) -> Self {
+    #[inline]
+    pub const fn double(&self) -> Self {
         Self(self.0 / 2)
     }
 }

@@ -32,11 +32,14 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(2, 2);
     /// assert_eq!(time_signature, TimeSignature::CUT_TIME);
     /// ```
-    pub fn new(notes: u64, beat_value: u64) -> Self {
+    #[inline]
+    pub const fn new(notes: u64, beat_value: u64) -> Self {
         Self { notes, beat_value }
     }
 
-    pub fn simple(beats: u64, value: PrimitiveDuration) -> Self {
+    /// Create a simple time signature.
+    #[inline]
+    pub const fn simple(beats: u64, value: PrimitiveDuration) -> Self {
         Self::new(beats, value.value())
     }
 
@@ -50,7 +53,8 @@ impl TimeSignature {
     /// let expected = TimeSignature::new(6, 8);
     /// assert_eq!(time_signature, expected);
     /// ```
-    pub fn compound(beats: u64, value: PrimitiveDuration) -> Self {
+    #[inline]
+    pub const fn compound(beats: u64, value: PrimitiveDuration) -> Self {
         Self::new(beats * 3, value.value())
     }
 
@@ -61,7 +65,8 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(6, 8);
     /// assert!(time_signature.is_compound());
     /// ```
-    pub fn is_compound(&self) -> bool {
+    #[inline]
+    pub const fn is_compound(&self) -> bool {
         self.notes % 3 == 0
     }
 
@@ -73,7 +78,8 @@ impl TimeSignature {
     /// assert!(time_signature.is_simple());
     /// let time_signature = TimeSignature::new(5, 4);
     /// assert!(time_signature.is_simple());
-    pub fn is_simple(&self) -> bool {
+    #[inline]
+    pub const fn is_simple(&self) -> bool {
         !self.is_compound()
     }
 
@@ -88,7 +94,8 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(4, 4);
     /// assert_eq!(time_signature.beats(), 4);
     /// ```
-    pub fn beats(&self) -> u64 {
+    #[inline]
+    pub const fn beats(&self) -> u64 {
         if self.is_compound() {
             self.notes / 3
         } else {
@@ -108,6 +115,7 @@ impl TimeSignature {
     /// # Panics
     /// It panics
     /// if the beat value is invalid and [`PrimitiveDuration::try_from`] returns an error.
+    #[inline]
     pub fn value(&self) -> PrimitiveDuration {
         PrimitiveDuration::try_from(self.beat_value).expect("Invalid time signature value")
     }

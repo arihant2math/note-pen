@@ -46,7 +46,7 @@ impl Display for Alphabet {
 }
 
 impl Alphabet {
-    pub fn next(&self) -> Self {
+    pub const fn next(&self) -> Self {
         match self {
             Alphabet::A => Alphabet::B,
             Alphabet::B => Alphabet::C,
