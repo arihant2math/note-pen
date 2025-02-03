@@ -137,6 +137,11 @@ impl Phrase {
     }
 
     #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+
+    #[inline]
     pub fn get_id(&self, index: usize) -> Option<&PhraseItem> {
         self.items.get_index(index).map(|(_, d)| d)
     }
