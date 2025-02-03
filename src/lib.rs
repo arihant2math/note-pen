@@ -22,6 +22,7 @@ pub use rest::Rest;
 pub use time_signature::TimeSignature;
 pub use tonality::Tonality;
 
+#[allow(unused_imports)]
 pub(crate) use prelude::*;
 
 pub mod prelude {
