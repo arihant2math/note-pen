@@ -117,7 +117,7 @@ impl Add for Note {
 impl Add<Interval> for Note {
     type Output = Note;
     fn add(self, interval: Interval) -> Note {
-        Note::from_id(self.id() + interval.0 as i64)
+        Note::from_id(self.id() + i64::from(interval.0))
     }
 }
 
@@ -131,7 +131,7 @@ impl Sub for Note {
 impl Sub<Interval> for Note {
     type Output = Note;
     fn sub(self, interval: Interval) -> Note {
-        Note::from_id(self.id() - interval.0 as i64)
+        Note::from_id(self.id() - i64::from(interval.0))
     }
 }
 
