@@ -109,7 +109,7 @@ impl Chord {
     /// let chord = Chord::triad_from_base(Tonality::Major, Note::new(Alphabet::E, Accidental::Natural, 4), Inversion::ROOT);
     /// assert_eq!(chord, Note::new(Alphabet::E, Accidental::Natural, 4) +
     ///  Note::new(Alphabet::G, Accidental::Natural, 4) +
-    /// Note::new(Alphabet::B, Accidental::Natural, 4)
+    /// Note::new(Alphabet::B, Accidental::Natural, 5)
     ///);
     /// ```
     pub fn triad_from_base(tonality: Tonality, base: Note, inversion: Inversion) -> Self {
