@@ -105,6 +105,9 @@ impl TimeSignature {
     /// let time_signature = TimeSignature::new(4, 4);
     /// assert_eq!(time_signature.value(), PrimitiveDuration::QUARTER);
     /// ```
+    /// # Panics
+    /// It panics
+    /// if the beat value is invalid and [`PrimitiveDuration::try_from`] returns an error.
     pub fn value(&self) -> PrimitiveDuration {
         PrimitiveDuration::try_from(self.beat_value).expect("Invalid time signature value")
     }
