@@ -103,6 +103,46 @@ impl Chord {
         }
         Self { notes }.rotate_by(inversion as usize)
     }
+
+    /// Creates a triad with a given tonality, base, and inversion.
+    /// # Examples
+    /// ```rust
+    /// use note_pen::prelude::*;
+    /// let chord = Chord::triad_from_base(Tonality::Major, Note::new(Alphabet::E, Accidental::Natural, 4), Inversion::ROOT);
+    /// assert_eq!(chord, Note::new(Alphabet::E, Accidental::Natural, 4) +
+    ///  Note::new(Alphabet::G, Accidental::Natural, 4) +
+    /// Note::new(Alphabet::B, Accidental::Natural, 4)
+    ///);
+    /// ```
+    pub fn triad_from_base(tonality: Tonality, base: Note, inversion: Inversion) -> Self {
+        let inversion = inversion.value_for(3);
+        match inversion {
+            0 => {
+                Self::triad_from_root(tonality, base, Inversion::ROOT)
+            }
+            1 => {
+                let int = match tonality {
+                    Tonality::Major => Interval::MAJOR_THIRD,
+                    Tonality::Minor => Interval::MINOR_THIRD,
+                    Tonality::Diminished => Interval::MINOR_THIRD,
+                    Tonality::Augmented => Interval::MAJOR_THIRD,
+                };
+                let root = base - int;
+                Self::triad_from_root(tonality, root, Inversion::FIRST)
+            }
+            2 => {
+                let int = match tonality {
+                    Tonality::Major => Interval::PERFECT_FIFTH,
+                    Tonality::Minor => Interval::PERFECT_FIFTH,
+                    Tonality::Diminished => Interval::TRITONE,
+                    Tonality::Augmented => Interval::AUGMENTED_FIFTH,
+                };
+                let root = base - int;
+                Self::triad_from_root(tonality, root, Inversion::SECOND)
+            }
+            _ => unreachable!()
+        }
+    }
 }
 
 impl Add<Note> for Chord {
