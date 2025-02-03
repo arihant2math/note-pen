@@ -1,5 +1,5 @@
-use std::ops::Add;
 use crate::note::Note;
+use std::ops::Add;
 
 /// Represents an accidental.
 ///

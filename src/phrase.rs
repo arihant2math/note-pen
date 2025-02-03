@@ -1,12 +1,11 @@
-use indexmap::IndexMap;
-use uuid::Uuid;
 use crate::chord::Chord;
 use crate::duration::Duration;
 use crate::key_signature::KeySignature;
 use crate::note::Note;
 use crate::time::{BeatFraction, Measure};
 use crate::time_signature::TimeSignature;
-
+use indexmap::IndexMap;
+use uuid::Uuid;
 
 /// A modifier that can be applied to a phrase item.
 /// This can include accents, staccatos, etc. or directions like dolce.
@@ -34,7 +33,11 @@ impl Modifier {
     /// This includes forte, piano, etc.
     /// but not crescendo or decrescendo.
     pub fn dynamic(name: &str) -> Self {
-        Self::new("dynamic".to_string(), "Dynamic".to_string(), name.as_bytes().to_vec())
+        Self::new(
+            "dynamic".to_string(),
+            "Dynamic".to_string(),
+            name.as_bytes().to_vec(),
+        )
     }
 
     /// Predefined method to define text.
@@ -44,7 +47,11 @@ impl Modifier {
     /// This should **not** include lyrics or tempo indications
     /// like ritardando.
     pub fn text(text: &str) -> Self {
-        Self::new("text".to_string(), "Text".to_string(), text.as_bytes().to_vec())
+        Self::new(
+            "text".to_string(),
+            "Text".to_string(),
+            text.as_bytes().to_vec(),
+        )
     }
 }
 
@@ -70,7 +77,7 @@ pub struct TimedPhraseItem {
     pub inner: InnerTimedPhraseItem,
     pub duration: Duration,
     pub modifiers: Vec<Modifier>,
-    pub anchor: BeatFraction
+    pub anchor: BeatFraction,
 }
 
 #[derive(Clone)]
@@ -129,7 +136,7 @@ impl Phrase {
     }
 
     /// Returns an iterator over the phrase items with their associated ids.
-    pub fn iter(&self) -> impl Iterator<Item=(&u128, &PhraseItem)> {
+    pub fn iter(&self) -> impl Iterator<Item = (&u128, &PhraseItem)> {
         self.items.iter()
     }
 }

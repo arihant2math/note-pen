@@ -1,6 +1,5 @@
 use crate::duration::PrimitiveDuration;
 
-
 /// Represents a time signature.
 ///
 /// Internally, it stores the number of notes in a measure and the beat value.
@@ -13,9 +12,15 @@ pub struct TimeSignature {
 
 impl TimeSignature {
     /// 4/4 time signature
-    pub const COMMON_TIME: Self = Self { notes: 4, beat_value: 4 };
+    pub const COMMON_TIME: Self = Self {
+        notes: 4,
+        beat_value: 4,
+    };
     /// 2/2 time signature
-    pub const CUT_TIME: Self = Self { notes: 2, beat_value: 2 };
+    pub const CUT_TIME: Self = Self {
+        notes: 2,
+        beat_value: 2,
+    };
 
     /// Create a new time signature.
     /// It takes the number of notes in a measure and the beat value.

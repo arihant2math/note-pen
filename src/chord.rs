@@ -1,6 +1,6 @@
-use std::ops::Add;
 use crate::note::Note;
 use crate::{Interval, Tonality};
+use std::ops::Add;
 
 /// A chord is a collection of notes that are played simultaneously for the same duration.
 #[derive(Clone, Debug)]
@@ -49,9 +49,7 @@ impl Chord {
 
     /// Creates a new chord with the single note provided.
     pub fn single(note: Note) -> Self {
-        Self {
-            notes: vec![note],
-        }
+        Self { notes: vec![note] }
     }
 
     pub fn rotate(&self) -> Self {
@@ -117,9 +115,7 @@ impl Chord {
     pub fn triad_from_base(tonality: Tonality, base: Note, inversion: Inversion) -> Self {
         let inversion = inversion.value_for(3);
         match inversion {
-            0 => {
-                Self::triad_from_root(tonality, base, Inversion::ROOT)
-            }
+            0 => Self::triad_from_root(tonality, base, Inversion::ROOT),
             1 => {
                 let int = match tonality {
                     Tonality::Major => Interval::MAJOR_THIRD,
@@ -140,7 +136,7 @@ impl Chord {
                 let root = base - int;
                 Self::triad_from_root(tonality, root, Inversion::SECOND)
             }
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 }

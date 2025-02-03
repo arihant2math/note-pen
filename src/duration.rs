@@ -63,10 +63,7 @@ pub struct Duration {
 
 impl From<PrimitiveDuration> for Duration {
     fn from(primitive: PrimitiveDuration) -> Self {
-        Self {
-            primitive,
-            dots: 0,
-        }
+        Self { primitive, dots: 0 }
     }
 }
 

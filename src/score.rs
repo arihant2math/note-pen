@@ -1,5 +1,5 @@
-use std::fmt::Display;
 use crate::part::Part;
+use std::fmt::Display;
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

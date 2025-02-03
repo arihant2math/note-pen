@@ -1,6 +1,6 @@
-use std::ops::{Add, Sub};
-use crate::{Accidental, Alphabet, Interval};
 use crate::chord::Chord;
+use crate::{Accidental, Alphabet, Interval};
+use std::ops::{Add, Sub};
 
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -26,7 +26,7 @@ impl Note {
     pub fn simplify(&self) -> Self {
         match self.accidental {
             Accidental::Natural | Accidental::Flat | Accidental::Sharp => *self,
-            Accidental::DoubleFlat | Accidental::DoubleSharp => Self::from_id(self.id())
+            Accidental::DoubleFlat | Accidental::DoubleSharp => Self::from_id(self.id()),
         }
     }
 

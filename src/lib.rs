@@ -25,11 +25,11 @@ pub use tonality::Tonality;
 pub(crate) use prelude::*;
 
 pub mod prelude {
-    pub use crate::{Accidental, Alphabet, Interval, Part, Rest, TimeSignature, Tonality};
     pub use crate::chord::{Chord, Inversion};
-    pub use crate::duration::{PrimitiveDuration, Duration};
+    pub use crate::duration::{Duration, PrimitiveDuration};
     pub use crate::note::Note;
-    pub use crate::phrase::{PhraseItem, Phrase};
+    pub use crate::phrase::{Phrase, PhraseItem};
     pub use crate::score::{Score, ScoreCredit};
-    pub use crate::solfege::{SolfegeSyllable, Solfege};
+    pub use crate::solfege::{Solfege, SolfegeSyllable};
+    pub use crate::{Accidental, Alphabet, Interval, Part, Rest, TimeSignature, Tonality};
 }
