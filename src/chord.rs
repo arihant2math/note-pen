@@ -108,7 +108,7 @@ impl Chord {
     /// use note_pen::prelude::*;
     /// let chord = Chord::triad_from_base(Tonality::Major, Note::new(Alphabet::E, Accidental::Natural, 4), Inversion::ROOT);
     /// assert_eq!(chord, Note::new(Alphabet::E, Accidental::Natural, 4) +
-    ///  Note::new(Alphabet::G, Accidental::Natural, 4) +
+    ///  Note::new(Alphabet::G, Accidental::Sharp, 4) +
     /// Note::new(Alphabet::B, Accidental::Natural, 5)
     ///);
     /// ```
