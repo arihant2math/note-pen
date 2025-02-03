@@ -159,6 +159,7 @@ mod ops_tests {
     }
 
     #[test]
+    #[allow(clippy::many_single_char_names)]
     fn test_sub_note_note() {
         use super::{Accidental, Alphabet, Note};
         use crate::Interval;
