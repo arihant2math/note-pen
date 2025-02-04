@@ -63,7 +63,7 @@ impl Chord {
         let mut notes = self.notes.clone();
         for _ in 0..n {
             let first = notes.remove(0);
-            notes.push(first);
+            notes.push(first + Interval::OCTAVE);
         }
         Self { notes }
     }
@@ -153,5 +153,43 @@ impl Add<Note> for Chord {
 impl PartialEq for Chord {
     fn eq(&self, other: &Self) -> bool {
         self.notes == other.notes
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_root_chord_gen_major() {
+        use crate::prelude::*;
+        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::ROOT);
+        assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
+            Note::new(Alphabet::E, Accidental::Natural, 4) +
+            Note::new(Alphabet::G, Accidental::Natural, 4)
+        );
+    }
+
+    #[test]
+    fn test_root_chord_gen_minor() {
+        use crate::prelude::*;
+        let chord = Chord::triad_from_root(Tonality::Minor, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::ROOT);
+        assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
+            Note::new(Alphabet::E, Accidental::Flat, 4) +
+            Note::new(Alphabet::G, Accidental::Natural, 4)
+        );
+    }
+
+    #[test]
+    fn test_root_chord_gen_inversion() {
+        use crate::prelude::*;
+        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::FIRST);
+        assert_eq!(chord, Note::new(Alphabet::E, Accidental::Natural, 4) +
+            Note::new(Alphabet::G, Accidental::Natural, 4) +
+            Note::new(Alphabet::C, Accidental::Natural, 5)
+        );
+        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::SECOND);
+        assert_eq!(chord, Note::new(Alphabet::G, Accidental::Natural, 4) +
+            Note::new(Alphabet::C, Accidental::Natural, 5) +
+            Note::new(Alphabet::E, Accidental::Natural, 5)
+        );
     }
 }
