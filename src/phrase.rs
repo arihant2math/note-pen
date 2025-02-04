@@ -6,6 +6,7 @@ use crate::time::{BeatFraction, Measure};
 use crate::time_signature::TimeSignature;
 use indexmap::IndexMap;
 use uuid::Uuid;
+use crate::Clef;
 
 /// A modifier that can be applied to a phrase item.
 /// This can include accents, staccatos, etc. or directions like dolce.
@@ -77,6 +78,10 @@ pub struct TimedPhraseItem {
     pub inner: InnerTimedPhraseItem,
     pub duration: Duration,
     pub modifiers: Vec<Modifier>,
+    /// The beat fraction that this item is anchored to
+    ///
+    /// Should not be greater than the time signature
+    /// because the item is implied to be in the measure.
     pub anchor: BeatFraction,
 }
 
@@ -89,14 +94,18 @@ pub enum PhraseItem {
     /// Key signature change at the start of the measure.
     KeySignature(KeySignature),
     /// Time signature change at the start of the measure.
-    TimeSignature(TimeSignature, Measure),
-    /// Start measure
-    Barline(Measure),
-    /// Which measure to repeat start the repeat at.
+    TimeSignature(TimeSignature),
+    /// Time signature change at the start of the measure.
+    Clef(Clef),
+    /// Mark start of measure
+    StartMeasure(Measure),
+    /// Mark end of measure
+    EndMeasure(Measure),
+    /// Start repeat at start of current measure.
     StartRepeat(Measure),
-    /// Which measure to end the repeat at.
-    EndRepeat(Measure),
-    /// Which measure to end the piece at.
+    /// End the repeat at the end of measure.
+    EndRepeat,
+    /// End piece after measure
     End(Measure),
     /// Start of a modifier.
     StartExtendedModifier(ExtendedModifier),
