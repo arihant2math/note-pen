@@ -8,6 +8,9 @@ use std::fmt::Display;
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ScoreCredit {
+    /// The key for the credit, such as "Composer" or "Arranger".
+    ///
+    /// This should be a human-readable string, and should not have leading or trailing whitespace.
     pub key: String,
     pub value: Vec<String>,
 }
