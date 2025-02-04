@@ -1,6 +1,10 @@
 use crate::part::Part;
 use std::fmt::Display;
 
+/// A generic storage class for credits, such as for the composer, arranger, lyricist, etc.
+///
+/// There can be multiple values for a single key, such as multiple composers,
+/// this should be used instead of commas.
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ScoreCredit {
