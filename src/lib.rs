@@ -1,6 +1,7 @@
 mod accidental;
 mod alphabet;
 pub mod chord;
+mod clef;
 pub mod duration;
 mod interval;
 pub mod key_signature;
@@ -16,6 +17,7 @@ mod tonality;
 
 pub use accidental::Accidental;
 pub use alphabet::Alphabet;
+pub use clef::Clef;
 pub use interval::Interval;
 pub use part::Part;
 pub use rest::Rest;
@@ -32,5 +34,5 @@ pub mod prelude {
     pub use crate::phrase::{Phrase, PhraseItem};
     pub use crate::score::{Score, ScoreCredit};
     pub use crate::solfege::{Solfege, SolfegeSyllable};
-    pub use crate::{Accidental, Alphabet, Interval, Part, Rest, TimeSignature, Tonality};
+    pub use crate::{Accidental, Alphabet, Clef, Interval, Part, Rest, TimeSignature, Tonality};
 }
