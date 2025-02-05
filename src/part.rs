@@ -5,5 +5,6 @@ use crate::phrase::Phrase;
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Part {
     pub name: Option<String>,
+    pub instrument: Option<String>,
     pub phrases: Vec<Phrase>,
 }
