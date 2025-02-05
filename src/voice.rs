@@ -41,6 +41,17 @@ impl Modifier {
         )
     }
 
+    /// Predefined method to define bpm.
+    /// features like midi conversion should be able to use this.
+    pub fn bpm(bpm: u32) -> Self {
+        Self::new(
+            "bpm".to_string(),
+            "BPM".to_string(),
+            // Convert to string for consistency
+            bpm.to_string().as_bytes().to_vec(),
+        )
+    }
+
     /// Predefined method to define text.
     ///
     /// This includes dolce, poco a poco, etc.
