@@ -8,6 +8,10 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/arihant2math/note-pen"
 
+[[example]]
+name = "voice_leading"
+path = "examples/voice_leading.rs"
+
 [dependencies]
 derive_more = { version = "2.0", features = ["std", "add", "not"] }
 indexmap = "2.7"
