@@ -1,6 +1,7 @@
 use crate::chord::Chord;
 use crate::{Accidental, Alphabet, Interval};
 use std::ops::{Add, Sub};
+use crate::pitch::Pitch;
 
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -11,7 +12,7 @@ pub struct Note {
 }
 
 impl Note {
-    pub fn new(alphabet: Alphabet, accidental: Accidental, octave: u8) -> Self {
+    pub const fn new(alphabet: Alphabet, accidental: Accidental, octave: u8) -> Self {
         Self {
             alphabet,
             accidental,
@@ -31,7 +32,7 @@ impl Note {
     }
 
     /// Returns the number of half-steps from A4.
-    pub const fn id(&self) -> i64 {
+    pub const fn id(&self) -> Pitch {
         let offset = match self.alphabet {
             Alphabet::A => 0,
             Alphabet::B => 2,
@@ -49,12 +50,12 @@ impl Note {
             Accidental::DoubleSharp => 2,
         };
         let octave = (self.octave as i64 - 4) * 12;
-        offset + accidental + octave
+        Pitch((offset + accidental + octave) as i16)
     }
 
-    pub const fn from_id(id: i64) -> Self {
-        let octave = id / 12 + 4;
-        let id = id % 12;
+    pub const fn from_id(id: Pitch) -> Self {
+        let octave = id.0 / 12 + 4;
+        let id = id.0 % 12;
         let (alphabet, accidental) = match id {
             0 => (Alphabet::A, Accidental::Natural),
             1 => (Alphabet::A, Accidental::Sharp),
@@ -80,23 +81,23 @@ impl Note {
     /// Increments the note by one half-step.
     #[inline]
     pub const fn increment(&self) -> Self {
-        Self::from_id(self.id() + 1)
+        Self::from_id(self.id().increment())
     }
 
     /// Decrements the note by one half-step.
     #[inline]
     pub const fn decrement(&self) -> Self {
-        Self::from_id(self.id() - 1)
+        Self::from_id(self.id().decrement())
     }
 
     #[inline]
     pub const fn increment_by(&self, steps: i64) -> Self {
-        Self::from_id(self.id() + steps)
+        Self::from_id(Pitch(self.id().0 + steps as i16))
     }
 
     #[inline]
     pub const fn decrement_by(&self, steps: i64) -> Self {
-        Self::from_id(self.id() - steps)
+        Self::from_id(Pitch(self.id().0 - steps as i16))
     }
 }
 
@@ -117,21 +118,21 @@ impl Add for Note {
 impl Add<Interval> for Note {
     type Output = Note;
     fn add(self, interval: Interval) -> Note {
-        Note::from_id(self.id() + i64::from(interval.0))
+        Note::from_id(Pitch(self.id().0 + interval.0 as i16))
     }
 }
 
 impl Sub for Note {
     type Output = Interval;
     fn sub(self, other: Self) -> Interval {
-        Interval((self.id() - other.id()) as u8)
+        self.id() - other.id()
     }
 }
 
 impl Sub<Interval> for Note {
     type Output = Note;
     fn sub(self, interval: Interval) -> Note {
-        Note::from_id(self.id() - i64::from(interval.0))
+        Note::from_id(Pitch(self.id().0 - interval.0 as i16))
     }
 }
 

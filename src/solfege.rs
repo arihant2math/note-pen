@@ -1,6 +1,14 @@
 //! Solfège is a system of attributing a distinct syllable to each note in a musical scale.
-use crate::Alphabet;
 
+use std::fmt::{Display, Formatter};
+use crate::{Accidental, Alphabet};
+use crate::note::Note;
+use crate::pitch::{Pitch, RelativePitch};
+
+/// This enum represents all possible syllables of the solfège system.
+///
+/// It is important to note that the u8 representation of the syllables
+/// is different from their pitch value, use [`SolfegeSyllable::into_u8`] to convert it properly.
 #[derive(Copy, Clone, Debug)]
 pub enum SolfegeSyllable {
     Do,
@@ -26,21 +34,16 @@ impl SolfegeSyllable {
     pub const fn into_u8(self) -> u8 {
         match self {
             Self::Do => 0,
-            Self::Di => 1,
-            Self::Ra => 1,
+            Self::Di | Self::Ra => 1,
             Self::Re => 2,
-            Self::Ri => 3,
-            Self::Me => 3,
+            Self::Ri | Self::Me => 3,
             Self::Mi => 4,
             Self::Fa => 5,
-            Self::Fi => 6,
-            Self::Se => 6,
+            Self::Fi | Self::Se => 6,
             Self::So => 7,
-            Self::Si => 8,
-            Self::Le => 8,
+            Self::Si | Self::Le => 8,
             Self::La => 9,
-            Self::Li => 10,
-            Self::Te => 10,
+            Self::Li | Self::Te => 10,
             Self::Ti => 11,
         }
     }
@@ -80,16 +83,44 @@ impl SolfegeSyllable {
     }
 }
 
+impl Display for SolfegeSyllable {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Do => write!(f, "Do"),
+            Self::Di => write!(f, "Di"),
+            Self::Ra => write!(f, "Ra"),
+            Self::Re => write!(f, "Re"),
+            Self::Ri => write!(f, "Ri"),
+            Self::Me => write!(f, "Me"),
+            Self::Mi => write!(f, "Mi"),
+            Self::Fa => write!(f, "Fa"),
+            Self::Fi => write!(f, "Fi"),
+            Self::Se => write!(f, "Se"),
+            Self::So => write!(f, "So"),
+            Self::Si => write!(f, "Si"),
+            Self::Le => write!(f, "Le"),
+            Self::La => write!(f, "La"),
+            Self::Li => write!(f, "Li"),
+            Self::Te => write!(f, "Te"),
+            Self::Ti => write!(f, "Ti"),
+        }
+    }
+}
+
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(transparent)]
-pub struct Moveable(Alphabet);
+pub struct Moveable(pub Note);
 
 #[allow(non_upper_case_globals)]
-pub const Fixed: Moveable = Moveable(Alphabet::C);
+/// The fixed solfège root is just a movable solfège with a base of C.
+pub const Fixed: Moveable = Moveable(Note::new(Alphabet::C, Accidental::Natural, 4));
 
 pub struct Solfege {
     pub syllable: SolfegeSyllable,
+    /// The solfège root.
+    ///
+    /// Note that [`Fixed`] is also of type [`Moveable`].
     pub kind: Moveable,
 }
 
@@ -99,8 +130,9 @@ impl Solfege {
         Self { syllable, kind }
     }
 
+    /// Get the pitch value of the solfège.
     #[inline]
-    pub const fn id(&self) -> u8 {
-        self.kind.0 as u8 + self.syllable.into_u8()
+    pub const fn id(&self) -> RelativePitch {
+        Pitch(self.kind.0.id().0 + self.syllable.into_u8() as i16).simple()
     }
 }
