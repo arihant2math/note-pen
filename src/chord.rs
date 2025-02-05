@@ -23,6 +23,9 @@ impl Default for Inversion {
 }
 
 impl Inversion {
+    /// Creates a new inversion.
+    /// # Arguments
+    /// * `inversion` - The inversion value, 0 means root/no inversion.
     pub fn new(inversion: u8) -> Self {
         Self(inversion)
     }
