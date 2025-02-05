@@ -139,6 +139,38 @@ impl Sub<Interval> for Note {
     }
 }
 
+#[cfg(feature = "midi")]
+mod midi {
+    use midi_file::core::NoteNumber;
+    use crate::note::Note;
+    impl Note {
+        pub fn to_midi(&self) -> NoteNumber {
+            NoteNumber::new((self.id().0 + 69) as u8)
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use midi_file::core::NoteNumber;
+        use crate::{Accidental, Alphabet};
+        use crate::note::Note;
+
+        const C4: NoteNumber = NoteNumber::new(72);
+        const D4: NoteNumber = NoteNumber::new(74);
+        const E4: NoteNumber = NoteNumber::new(76);
+        #[test]
+        fn test_basic() {
+            let c4 = Note::new(Alphabet::C, Accidental::Natural, 4);
+            let d4 = Note::new(Alphabet::D, Accidental::Natural, 4);
+            let e4 = Note::new(Alphabet::E, Accidental::Natural, 4);
+
+            assert_eq!(c4.to_midi(), C4);
+            assert_eq!(d4.to_midi(), D4);
+            assert_eq!(e4.to_midi(), E4);
+        }
+    }
+}
+
 #[cfg(test)]
 mod ops_tests {
     #[test]
