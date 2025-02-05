@@ -17,7 +17,7 @@ pub struct ScoreCredit {
 
 impl Display for ScoreCredit {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{} {}", self.key, self.value.join(", "))
+        write!(f, "{}: {}", self.key, self.value.join(", "))
     }
 }
 
@@ -27,4 +27,17 @@ pub struct Score {
     pub title: Option<String>,
     pub credits: Vec<ScoreCredit>,
     pub parts: Vec<Part>,
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_score_credit_display() {
+        use super::*;
+        let credit = ScoreCredit {
+            key: "Composer".to_string(),
+            value: vec!["Johann Sebastian Bach".to_string()],
+        };
+        assert_eq!(credit.to_string(), "Composer: Johann Sebastian Bach");
+    }
 }
