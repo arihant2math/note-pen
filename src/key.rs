@@ -72,8 +72,8 @@ pub struct Scale {
     pub notes: Vec<Note>,
 }
 
-impl From<Key> for Scale {
-    fn from(key: Key) -> Self {
+impl From<&Key> for Scale {
+    fn from(key: &Key) -> Self {
         match key {
             Key::Chromatic => {
                 let notes = (0..12).map(|i| Note::from_id(Pitch(i))).collect();
@@ -104,7 +104,7 @@ mod tests {
     #[test]
     fn test_major() {
         let key = super::Key::new_major(crate::Note::new(crate::Alphabet::C, crate::Accidental::Natural, 4)).unwrap();
-        let scale = super::Scale::from(key);
+        let scale = super::Scale::from(&key);
         assert_eq!(scale.notes.len(), 7);
         assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::C, crate::Accidental::Natural, 4));
         assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::D, crate::Accidental::Natural, 4));
@@ -114,7 +114,7 @@ mod tests {
         assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 5));
         assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::B, crate::Accidental::Natural, 5));
         let key = super::Key::new_major(crate::Note::new(crate::Alphabet::G, crate::Accidental::Natural, 4)).unwrap();
-        let scale = super::Scale::from(key);
+        let scale = super::Scale::from(&key);
         assert_eq!(scale.notes.len(), 7);
         assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::G, crate::Accidental::Natural, 4));
         assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 5));
@@ -124,7 +124,7 @@ mod tests {
         assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::E, crate::Accidental::Natural, 5));
         assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::F, crate::Accidental::Sharp, 5));
         let key = super::Key::new_major(crate::Note::new(crate::Alphabet::F, crate::Accidental::Sharp, 4)).unwrap();
-        let scale = super::Scale::from(key);
+        let scale = super::Scale::from(&key);
         assert_eq!(scale.notes.len(), 7);
         assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::F, crate::Accidental::Sharp, 4));
         assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::G, crate::Accidental::Sharp, 4));
@@ -133,5 +133,43 @@ mod tests {
         assert_eq!(scale.notes[4], crate::Note::new(crate::Alphabet::C, crate::Accidental::Sharp, 5));
         assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::D, crate::Accidental::Sharp, 5));
         assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::E, crate::Accidental::Sharp, 5));
+    }
+
+    #[test]
+    fn test_minor() {
+        let key = super::Key::new_minor(crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 4)).unwrap();
+        let scale = super::Scale::from(&key);
+        assert_eq!(scale.notes.len(), 7);
+        assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::B, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[2], crate::Note::new(crate::Alphabet::C, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[3], crate::Note::new(crate::Alphabet::D, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[4], crate::Note::new(crate::Alphabet::E, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::F, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::G, crate::Accidental::Natural, 4));
+        let key = super::Key::new_minor(crate::Note::new(crate::Alphabet::E, crate::Accidental::Natural, 4)).unwrap();
+        let scale = super::Scale::from(&key);
+        assert_eq!(scale.notes.len(), 7);
+        assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::E, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::F, crate::Accidental::Sharp, 4));
+        assert_eq!(scale.notes[2], crate::Note::new(crate::Alphabet::G, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[3], crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[4], crate::Note::new(crate::Alphabet::B, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::C, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::D, crate::Accidental::Natural, 5));
+    }
+
+    #[test]
+    fn test_flat() {
+        let key = super::Key::new_major(crate::Note::new(crate::Alphabet::F, crate::Accidental::Natural, 4)).unwrap();
+        let scale = super::Scale::from(&key);
+        assert_eq!(scale.notes.len(), 7);
+        assert_eq!(scale.notes[0], crate::Note::new(crate::Alphabet::F, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[1], crate::Note::new(crate::Alphabet::G, crate::Accidental::Natural, 4));
+        assert_eq!(scale.notes[2], crate::Note::new(crate::Alphabet::A, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[3], crate::Note::new(crate::Alphabet::B, crate::Accidental::Flat, 5));
+        assert_eq!(scale.notes[4], crate::Note::new(crate::Alphabet::C, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[5], crate::Note::new(crate::Alphabet::D, crate::Accidental::Natural, 5));
+        assert_eq!(scale.notes[6], crate::Note::new(crate::Alphabet::E, crate::Accidental::Natural, 5));
     }
 }
