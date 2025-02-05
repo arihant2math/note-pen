@@ -3,7 +3,7 @@ use crate::{Accidental, Alphabet, Interval};
 use std::ops::{Add, Sub};
 use crate::pitch::Pitch;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Note {
     pub alphabet: Alphabet,
@@ -26,7 +26,7 @@ impl Note {
     /// however, it is guaranteed to be an enharmonic equivalent to the supplied note.
     pub const fn simplify(&self) -> Self {
         match self.accidental {
-            Accidental::Natural | Accidental::Flat | Accidental::Sharp => *self,
+            Accidental::None | Accidental::Natural | Accidental::Flat | Accidental::Sharp => *self,
             Accidental::DoubleFlat | Accidental::DoubleSharp => Self::from_id(self.id()),
         }
     }
@@ -43,6 +43,7 @@ impl Note {
             Alphabet::G => 10,
         };
         let accidental = match self.accidental {
+            Accidental::None => 0,
             Accidental::DoubleFlat => -2,
             Accidental::Flat => -1,
             Accidental::Natural => 0,
@@ -106,6 +107,8 @@ impl PartialEq for Note {
         self.id() == other.id()
     }
 }
+
+impl Eq for Note {}
 
 impl Add for Note {
     type Output = Chord;
