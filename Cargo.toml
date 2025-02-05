@@ -11,13 +11,16 @@ repository = "https://github.com/arihant2math/note-pen"
 [[example]]
 name = "voice_leading"
 path = "examples/voice_leading.rs"
+required-features = ["examples"]
 
 [dependencies]
 derive_more = { version = "2.0", features = ["std", "add", "not"] }
 indexmap = "2.7"
+itertools = { version = "0.14", optional = true }
 serde = { version = "1.0", features = ["derive"], optional = true }
 uuid = { version = "1.12", features = ["v4"] }
 
 [features]
 default = []
+examples = ["dep:itertools"]
 serde = ["dep:serde", "indexmap/serde"]
