@@ -120,6 +120,12 @@ pub struct Phrase {
 }
 
 impl Phrase {
+    pub fn new() -> Self {
+        Self {
+            items: IndexMap::new(),
+        }
+    }
+
     #[inline]
     pub fn push(&mut self, item: PhraseItem) {
         self.items.insert(Uuid::new_v4().as_u128(), item);
