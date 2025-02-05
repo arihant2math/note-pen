@@ -9,7 +9,7 @@ use crate::pitch::{Pitch, RelativePitch};
 ///
 /// It is important to note that the u8 representation of the syllables
 /// is different from their pitch value, use [`SolfegeSyllable::into_u8`] to convert it properly.
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq)]
 pub enum SolfegeSyllable {
     Do,
     Di,
@@ -107,6 +107,12 @@ impl Display for SolfegeSyllable {
     }
 }
 
+impl PartialEq for SolfegeSyllable {
+    fn eq(&self, other: &Self) -> bool {
+        self.into_u8() == other.into_u8()
+    }
+}
+
 #[derive(Copy, Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(transparent)]
@@ -134,5 +140,20 @@ impl Solfege {
     #[inline]
     pub const fn id(&self) -> RelativePitch {
         Pitch(self.kind.0.id().0 + self.syllable.into_u8() as i16).simple()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_solfege() {
+        let solfege = Solfege::new(SolfegeSyllable::Do, Fixed);
+        assert_eq!(solfege.id().0, 3);
+        assert_eq!(solfege.syllable, SolfegeSyllable::Do);
+        assert_eq!(solfege.kind.0, Fixed.0);
+        assert_eq!(solfege.syllable.increment().into_u8(), SolfegeSyllable::Di.into_u8());
+        assert_eq!(solfege.syllable.decrement().into_u8(), SolfegeSyllable::Ti.into_u8());
     }
 }
