@@ -31,7 +31,7 @@ pub struct Score {
 
 #[cfg(feature = "midi")]
 mod midi {
-    use crate::phrase::{InnerTimedPhraseItem, PhraseItem};
+    use crate::voice::{InnerTimedVoiceItem, VoiceItem};
     use crate::score::Score;
     use midi_file::core::{Channel, GeneralMidi};
     use midi_file::MidiFile;
@@ -54,21 +54,21 @@ mod midi {
                     let mut offset = 0;
                     for (_, i) in phrase.items {
                         match i {
-                            PhraseItem::Timed(t) => {
+                            VoiceItem::Timed(t) => {
                                 match t.inner {
-                                    InnerTimedPhraseItem::Note(n) => {
+                                    InnerTimedVoiceItem::Note(n) => {
                                         todo!()
                                     }
-                                    InnerTimedPhraseItem::Chord(c) => {
+                                    InnerTimedVoiceItem::Chord(c) => {
                                         todo!()
                                     }
-                                    InnerTimedPhraseItem::Rest => {
+                                    InnerTimedVoiceItem::Rest => {
                                         todo!()
                                     }
                                 }
                             }
-                            PhraseItem::KeySignature(_) => {}
-                            PhraseItem::TimeSignature(t) => {
+                            VoiceItem::KeySignature(_) => {}
+                            VoiceItem::TimeSignature(t) => {
                                 track.push_time_signature(
                                     0,
                                     t.beats() as u8,
@@ -76,11 +76,11 @@ mod midi {
                                     t.midi_clicks())?;
                             }
                             // unused
-                            PhraseItem::Clef(_) => {}
-                            PhraseItem::StartRepeat(_) => {}
-                            PhraseItem::EndRepeat => {}
-                            PhraseItem::StartExtendedModifier(_) => {}
-                            PhraseItem::EndExtendedModifier(_) => {}
+                            VoiceItem::Clef(_) => {}
+                            VoiceItem::StartRepeat(_) => {}
+                            VoiceItem::EndRepeat => {}
+                            VoiceItem::StartExtendedModifier(_) => {}
+                            VoiceItem::EndExtendedModifier(_) => {}
                             _ => {}
                         }
                     }

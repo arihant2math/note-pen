@@ -8,7 +8,7 @@ use indexmap::IndexMap;
 use uuid::Uuid;
 use crate::Clef;
 
-/// A modifier that can be applied to a phrase item.
+/// A modifier that can be applied to a voice item.
 /// This can include accents, staccatos, etc. or directions like dolce.
 /// Even dynamics like forte and piano should be included here.
 /// This should **not** include markings that extent over multiple items,
@@ -66,7 +66,7 @@ pub struct ExtendedModifier {
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum InnerTimedPhraseItem {
+pub enum InnerTimedVoiceItem {
     Chord(Chord),
     Note(Note),
     Rest,
@@ -74,8 +74,8 @@ pub enum InnerTimedPhraseItem {
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct TimedPhraseItem {
-    pub inner: InnerTimedPhraseItem,
+pub struct TimedVoiceItem {
+    pub inner: InnerTimedVoiceItem,
     pub duration: Duration,
     pub modifiers: Vec<Modifier>,
     /// The beat fraction that this item is anchored to
@@ -88,9 +88,9 @@ pub struct TimedPhraseItem {
 #[derive(Clone)]
 #[non_exhaustive]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum PhraseItem {
+pub enum VoiceItem {
     /// A note, chord, or rest with a duration and anchor.
-    Timed(TimedPhraseItem),
+    Timed(TimedVoiceItem),
     /// Key signature change at the start of the measure.
     KeySignature(KeySignature),
     /// Time signature change at the start of the measure.
@@ -115,11 +115,11 @@ pub enum PhraseItem {
 
 #[derive(Clone, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Phrase {
-    pub(crate) items: IndexMap<u128, PhraseItem>,
+pub struct Voice {
+    pub(crate) items: IndexMap<u128, VoiceItem>,
 }
 
-impl Phrase {
+impl Voice {
     pub fn new() -> Self {
         Self {
             items: IndexMap::new(),
@@ -127,12 +127,12 @@ impl Phrase {
     }
 
     #[inline]
-    pub fn push(&mut self, item: PhraseItem) {
+    pub fn push(&mut self, item: VoiceItem) {
         self.items.insert(Uuid::new_v4().as_u128(), item);
     }
 
     #[inline]
-    pub fn insert(&mut self, index: usize, item: PhraseItem) {
+    pub fn insert(&mut self, index: usize, item: VoiceItem) {
         self.items.insert(index as u128, item);
     }
 
@@ -142,7 +142,7 @@ impl Phrase {
     }
 
     #[inline]
-    pub fn get(&self, index: usize) -> Option<&PhraseItem> {
+    pub fn get(&self, index: usize) -> Option<&VoiceItem> {
         self.items.get(&(index as u128))
     }
 
@@ -157,12 +157,12 @@ impl Phrase {
     }
 
     #[inline]
-    pub fn get_id(&self, index: usize) -> Option<&PhraseItem> {
+    pub fn get_id(&self, index: usize) -> Option<&VoiceItem> {
         self.items.get_index(index).map(|(_, d)| d)
     }
 
-    /// Returns an iterator over the phrase items with their associated ids.
-    pub fn iter(&self) -> impl Iterator<Item = (&u128, &PhraseItem)> {
+    /// Returns an iterator over the voice items with their associated ids.
+    pub fn iter(&self) -> impl Iterator<Item = (&u128, &VoiceItem)> {
         self.items.iter()
     }
 }

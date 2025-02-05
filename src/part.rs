@@ -1,4 +1,4 @@
-use crate::phrase::Phrase;
+use crate::voice::Voice;
 
 /// Represents an entire musical part.
 #[derive(Clone, Default)]
@@ -6,5 +6,5 @@ use crate::phrase::Phrase;
 pub struct Part {
     pub name: Option<String>,
     pub instrument: Option<String>,
-    pub phrases: Vec<Phrase>,
+    pub phrases: Vec<Voice>,
 }
