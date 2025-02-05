@@ -33,19 +33,12 @@ impl Debug for Alphabet {
 
 impl Display for Alphabet {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Alphabet::A => write!(f, "A"),
-            Alphabet::B => write!(f, "B"),
-            Alphabet::C => write!(f, "C"),
-            Alphabet::D => write!(f, "D"),
-            Alphabet::E => write!(f, "E"),
-            Alphabet::F => write!(f, "F"),
-            Alphabet::G => write!(f, "G"),
-        }
+        write!(f, "{:?}", self)
     }
 }
 
 impl Alphabet {
+    /// Returns the next letter in the alphabet, and G.next() becomes A.
     pub const fn next(&self) -> Self {
         match self {
             Alphabet::A => Alphabet::B,
