@@ -6,5 +6,5 @@ use crate::voice::Voice;
 pub struct Part {
     pub name: Option<String>,
     pub instrument: Option<String>,
-    pub phrases: Vec<Voice>,
+    pub voices: Vec<Voice>,
 }

@@ -50,9 +50,9 @@ mod midi {
                 let ch = Channel::new(0);
                 track.set_general_midi(ch, GeneralMidi::ElectricGrandPiano)?;
 
-                for phrase in &part.phrases {
+                for voice in &part.voices {
                     let mut offset = 0;
-                    for (_, i) in phrase.items {
+                    for (_, i) in voice.items {
                         match i {
                             VoiceItem::Timed(t) => match t.inner {
                                 InnerTimedVoiceItem::Note(n) => {
