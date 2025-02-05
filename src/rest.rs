@@ -16,3 +16,15 @@ impl Rest {
         self.0
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::duration::Duration;
+
+    #[test]
+    fn test_rest() {
+        let rest = Rest::new(Duration::WHOLE);
+        assert_eq!(rest.duration(), Duration::WHOLE);
+    }
+}
