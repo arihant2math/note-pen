@@ -1,8 +1,10 @@
+use crate::Accidental;
 use crate::alphabet::Alphabet;
 
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct KeySignature {
+    pub accidental: Accidental,
     pub notes: Vec<Alphabet>,
 }
 
@@ -29,6 +31,7 @@ impl KeySignature {
     #[inline]
     pub fn new_sharp(n: u8) -> Self {
         Self {
+            accidental: Accidental::Sharp,
             notes: Self::SHARP_ORDER.iter().take(n as usize).copied().collect(),
         }
     }
@@ -36,6 +39,7 @@ impl KeySignature {
     #[inline]
     pub fn new_flat(n: u8) -> Self {
         Self {
+            accidental: Accidental::Flat,
             notes: Self::FLAT_ORDER.iter().take(n as usize).copied().collect(),
         }
     }
