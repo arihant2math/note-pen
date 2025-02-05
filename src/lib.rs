@@ -37,5 +37,5 @@ pub mod prelude {
     pub use crate::pitch::{RelativePitch, Pitch};
     pub use crate::score::{Score, ScoreCredit};
     pub use crate::solfege::{Solfege, SolfegeSyllable};
-    pub use crate::{Accidental, Alphabet, Clef, Interval, Part, Rest, TimeSignature, Tonality};
+    pub use crate::{Accidental, Alphabet, Clef, Interval, KeySignature, Part, Rest, TimeSignature, Tonality};
 }
