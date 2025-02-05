@@ -5,7 +5,7 @@ use std::fmt::{Debug, Display};
 /// This should not be used to represent a pitch.
 /// For relative pitches [Solfege](crate::solfege::Solfege) should be used.
 /// For absolute pitches [`NoteValue`](crate::note::Note) should be used.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Alphabet {
     A,
