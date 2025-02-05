@@ -12,6 +12,7 @@ pub mod phrase;
 pub mod pitch;
 mod rest;
 pub mod roman_numeral;
+mod scale_degree;
 pub mod score;
 pub mod solfege;
 pub mod time;
@@ -25,6 +26,7 @@ pub use interval::Interval;
 pub use key_signature::KeySignature;
 pub use part::Part;
 pub use rest::Rest;
+pub use scale_degree::ScaleDegree;
 pub use time_signature::TimeSignature;
 pub use tonality::Tonality;
 
@@ -41,5 +43,5 @@ pub mod prelude {
     pub use crate::roman_numeral::RomanNumeral;
     pub use crate::score::{Score, ScoreCredit};
     pub use crate::solfege::{Solfege, SolfegeSyllable};
-    pub use crate::{Accidental, Alphabet, Clef, Interval, KeySignature, Part, Rest, TimeSignature, Tonality};
+    pub use crate::{Accidental, Alphabet, Clef, Interval, KeySignature, Part, Rest, ScaleDegree, TimeSignature, Tonality};
 }
