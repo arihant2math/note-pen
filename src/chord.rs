@@ -162,9 +162,16 @@ impl PartialEq for Chord {
 #[cfg(test)]
 mod tests {
     #[test]
+    fn test_chord_gen() {
+        use crate::prelude::*;
+        let chord = Chord::single(Note::new(Alphabet::C, Accidental::Natural, 4));
+        assert_eq!(chord.notes, vec![Note::new(Alphabet::C, Accidental::Natural, 4)]);
+    }
+
+    #[test]
     fn test_root_chord_gen_major() {
         use crate::prelude::*;
-        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::ROOT);
+        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::default());
         assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
             Note::new(Alphabet::E, Accidental::Natural, 4) +
             Note::new(Alphabet::G, Accidental::Natural, 4)
@@ -189,7 +196,7 @@ mod tests {
             Note::new(Alphabet::G, Accidental::Natural, 4) +
             Note::new(Alphabet::C, Accidental::Natural, 5)
         );
-        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::SECOND);
+        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::new(2));
         assert_eq!(chord, Note::new(Alphabet::G, Accidental::Natural, 4) +
             Note::new(Alphabet::C, Accidental::Natural, 5) +
             Note::new(Alphabet::E, Accidental::Natural, 5)
