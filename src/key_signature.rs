@@ -1,5 +1,5 @@
-use crate::Accidental;
 use crate::alphabet::Alphabet;
+use crate::Accidental;
 
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

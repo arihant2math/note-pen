@@ -31,8 +31,8 @@ pub struct Score {
 
 #[cfg(feature = "midi")]
 mod midi {
-    use crate::voice::{InnerTimedVoiceItem, VoiceItem};
     use crate::score::Score;
+    use crate::voice::{InnerTimedVoiceItem, VoiceItem};
     use midi_file::core::{Channel, GeneralMidi};
     use midi_file::MidiFile;
 
@@ -54,26 +54,25 @@ mod midi {
                     let mut offset = 0;
                     for (_, i) in phrase.items {
                         match i {
-                            VoiceItem::Timed(t) => {
-                                match t.inner {
-                                    InnerTimedVoiceItem::Note(n) => {
-                                        todo!()
-                                    }
-                                    InnerTimedVoiceItem::Chord(c) => {
-                                        todo!()
-                                    }
-                                    InnerTimedVoiceItem::Rest => {
-                                        todo!()
-                                    }
+                            VoiceItem::Timed(t) => match t.inner {
+                                InnerTimedVoiceItem::Note(n) => {
+                                    todo!()
                                 }
-                            }
+                                InnerTimedVoiceItem::Chord(c) => {
+                                    todo!()
+                                }
+                                InnerTimedVoiceItem::Rest => {
+                                    todo!()
+                                }
+                            },
                             VoiceItem::KeySignature(_) => {}
                             VoiceItem::TimeSignature(t) => {
                                 track.push_time_signature(
                                     0,
                                     t.beats() as u8,
                                     t.denominator_to_midi(),
-                                    t.midi_clicks())?;
+                                    t.midi_clicks(),
+                                )?;
                             }
                             // unused
                             VoiceItem::Clef(_) => {}

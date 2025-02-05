@@ -1,9 +1,9 @@
 //! Solfège is a system of attributing a distinct syllable to each note in a musical scale.
 
-use std::fmt::{Display, Formatter};
-use crate::{Accidental, Alphabet};
 use crate::note::Note;
 use crate::pitch::{Pitch, RelativePitch};
+use crate::{Accidental, Alphabet};
+use std::fmt::{Display, Formatter};
 
 /// This enum represents all possible syllables of the solfège system.
 ///
@@ -156,7 +156,13 @@ mod tests {
         assert_eq!(solfege.id().0, 3);
         assert_eq!(solfege.syllable, SolfegeSyllable::Do);
         assert_eq!(solfege.kind.0, Fixed.0);
-        assert_eq!(solfege.syllable.increment().into_u8(), SolfegeSyllable::Di.into_u8());
-        assert_eq!(solfege.syllable.decrement().into_u8(), SolfegeSyllable::Ti.into_u8());
+        assert_eq!(
+            solfege.syllable.increment().into_u8(),
+            SolfegeSyllable::Di.into_u8()
+        );
+        assert_eq!(
+            solfege.syllable.decrement().into_u8(),
+            SolfegeSyllable::Ti.into_u8()
+        );
     }
 }

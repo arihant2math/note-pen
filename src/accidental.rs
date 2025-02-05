@@ -65,10 +65,25 @@ mod tests {
     fn test_accidental() {
         use super::*;
         let note = Note::new(Alphabet::A, Accidental::Sharp, 4);
-        assert_eq!(Accidental::Sharp + note, Note::new(Alphabet::B, Accidental::Natural, 4));
-        assert_eq!(Accidental::Sharp + note, Note::new(Alphabet::B, Accidental::Natural, 4));
-        assert_eq!(Accidental::Natural + note, Note::new(Alphabet::A, Accidental::Sharp, 4));
-        assert_eq!(Accidental::DoubleSharp + note, Note::new(Alphabet::B, Accidental::Sharp, 4));
-        assert_eq!(Accidental::Flat + note, Note::new(Alphabet::A, Accidental::default(), 4));
+        assert_eq!(
+            Accidental::Sharp + note,
+            Note::new(Alphabet::B, Accidental::Natural, 4)
+        );
+        assert_eq!(
+            Accidental::Sharp + note,
+            Note::new(Alphabet::B, Accidental::Natural, 4)
+        );
+        assert_eq!(
+            Accidental::Natural + note,
+            Note::new(Alphabet::A, Accidental::Sharp, 4)
+        );
+        assert_eq!(
+            Accidental::DoubleSharp + note,
+            Note::new(Alphabet::B, Accidental::Sharp, 4)
+        );
+        assert_eq!(
+            Accidental::Flat + note,
+            Note::new(Alphabet::A, Accidental::default(), 4)
+        );
     }
 }

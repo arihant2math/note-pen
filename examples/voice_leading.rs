@@ -12,7 +12,8 @@ fn get_solution_score(key: &Key, solution: &Solution) -> i32 {
     let mut score = 0;
     let lines = [&solution.soprano, &solution.alto, &solution.tenor];
     for line in lines {
-        let result = line.iter()
+        let result = line
+            .iter()
             .zip(line.iter().skip(1))
             .map(|(a, b)| {
                 let mut a_scale_degree = ScaleDegree::from_note(a, key);
@@ -23,7 +24,9 @@ fn get_solution_score(key: &Key, solution: &Solution) -> i32 {
                 while b_scale_degree.is_none() {
                     b_scale_degree = ScaleDegree::from_note(&b.increment_by(1), key);
                 }
-                (a_scale_degree.unwrap().degree.get() as i32 - b_scale_degree.unwrap().degree.get() as i32).abs()
+                (a_scale_degree.unwrap().degree.get() as i32
+                    - b_scale_degree.unwrap().degree.get() as i32)
+                    .abs()
             })
             .map(|diff| diff.pow(2).min(1))
             .sum::<i32>();
@@ -77,12 +80,13 @@ fn get_solutions(key: &Key, progression: &[RomanNumeral]) -> Vec<Solution> {
 
 fn main() {
     let g_major = Key::new_major(Note::new(Alphabet::G, Accidental::Natural, 4)).unwrap();
-    let chords = vec![RomanNumeral::major_chord(1, Inversion::ROOT),
-                      RomanNumeral::major_chord(5, Inversion::FIRST),
-                      RomanNumeral::major_chord(4, Inversion::FIRST),
-                      RomanNumeral::major_chord(6, Inversion::ROOT),
-                      RomanNumeral::seventh_chord(5, Tonality::Major, Inversion::ROOT),
-                      RomanNumeral::major_chord(1, Inversion::ROOT)
+    let chords = vec![
+        RomanNumeral::major_chord(1, Inversion::ROOT),
+        RomanNumeral::major_chord(5, Inversion::FIRST),
+        RomanNumeral::major_chord(4, Inversion::FIRST),
+        RomanNumeral::major_chord(6, Inversion::ROOT),
+        RomanNumeral::seventh_chord(5, Tonality::Major, Inversion::ROOT),
+        RomanNumeral::major_chord(1, Inversion::ROOT),
     ];
 
     let solutions = get_solutions(&g_major, &chords);
@@ -97,10 +101,12 @@ fn main() {
     }
 
     let best_solution = best_solution.unwrap();
-    let voices = [("soprano", best_solution.soprano),
+    let voices = [
+        ("soprano", best_solution.soprano),
         ("alto", best_solution.alto),
         ("tenor", best_solution.tenor),
-        ("bass", best_solution.bass)];
+        ("bass", best_solution.bass),
+    ];
     for (voice_name, voice) in voices.iter() {
         print!("{}: ", voice_name);
         for note in voice {

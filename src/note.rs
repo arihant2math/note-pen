@@ -1,7 +1,7 @@
 use crate::chord::Chord;
+use crate::pitch::Pitch;
 use crate::{Accidental, Alphabet, Interval};
 use std::ops::{Add, Sub};
-use crate::pitch::Pitch;
 
 #[derive(Copy, Clone, Debug, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

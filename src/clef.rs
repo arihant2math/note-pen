@@ -3,5 +3,5 @@
 #[non_exhaustive]
 pub enum Clef {
     Treble,
-    Bass
+    Bass,
 }

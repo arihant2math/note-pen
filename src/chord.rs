@@ -165,41 +165,68 @@ mod tests {
     fn test_chord_gen() {
         use crate::prelude::*;
         let chord = Chord::single(Note::new(Alphabet::C, Accidental::Natural, 4));
-        assert_eq!(chord.notes, vec![Note::new(Alphabet::C, Accidental::Natural, 4)]);
+        assert_eq!(
+            chord.notes,
+            vec![Note::new(Alphabet::C, Accidental::Natural, 4)]
+        );
     }
 
     #[test]
     fn test_root_chord_gen_major() {
         use crate::prelude::*;
-        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::default());
-        assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
-            Note::new(Alphabet::E, Accidental::Natural, 4) +
-            Note::new(Alphabet::G, Accidental::Natural, 4)
+        let chord = Chord::triad_from_root(
+            Tonality::Major,
+            Note::new(Alphabet::C, Accidental::Natural, 4),
+            Inversion::default(),
+        );
+        assert_eq!(
+            chord,
+            Note::new(Alphabet::C, Accidental::Natural, 4)
+                + Note::new(Alphabet::E, Accidental::Natural, 4)
+                + Note::new(Alphabet::G, Accidental::Natural, 4)
         );
     }
 
     #[test]
     fn test_root_chord_gen_minor() {
         use crate::prelude::*;
-        let chord = Chord::triad_from_root(Tonality::Minor, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::ROOT);
-        assert_eq!(chord, Note::new(Alphabet::C, Accidental::Natural, 4) +
-            Note::new(Alphabet::E, Accidental::Flat, 4) +
-            Note::new(Alphabet::G, Accidental::Natural, 4)
+        let chord = Chord::triad_from_root(
+            Tonality::Minor,
+            Note::new(Alphabet::C, Accidental::Natural, 4),
+            Inversion::ROOT,
+        );
+        assert_eq!(
+            chord,
+            Note::new(Alphabet::C, Accidental::Natural, 4)
+                + Note::new(Alphabet::E, Accidental::Flat, 4)
+                + Note::new(Alphabet::G, Accidental::Natural, 4)
         );
     }
 
     #[test]
     fn test_root_chord_gen_inversion() {
         use crate::prelude::*;
-        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::FIRST);
-        assert_eq!(chord, Note::new(Alphabet::E, Accidental::Natural, 4) +
-            Note::new(Alphabet::G, Accidental::Natural, 4) +
-            Note::new(Alphabet::C, Accidental::Natural, 5)
+        let chord = Chord::triad_from_root(
+            Tonality::Major,
+            Note::new(Alphabet::C, Accidental::Natural, 4),
+            Inversion::FIRST,
         );
-        let chord = Chord::triad_from_root(Tonality::Major, Note::new(Alphabet::C, Accidental::Natural, 4), Inversion::new(2));
-        assert_eq!(chord, Note::new(Alphabet::G, Accidental::Natural, 4) +
-            Note::new(Alphabet::C, Accidental::Natural, 5) +
-            Note::new(Alphabet::E, Accidental::Natural, 5)
+        assert_eq!(
+            chord,
+            Note::new(Alphabet::E, Accidental::Natural, 4)
+                + Note::new(Alphabet::G, Accidental::Natural, 4)
+                + Note::new(Alphabet::C, Accidental::Natural, 5)
+        );
+        let chord = Chord::triad_from_root(
+            Tonality::Major,
+            Note::new(Alphabet::C, Accidental::Natural, 4),
+            Inversion::new(2),
+        );
+        assert_eq!(
+            chord,
+            Note::new(Alphabet::G, Accidental::Natural, 4)
+                + Note::new(Alphabet::C, Accidental::Natural, 5)
+                + Note::new(Alphabet::E, Accidental::Natural, 5)
         );
     }
 }

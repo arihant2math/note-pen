@@ -4,9 +4,9 @@ use crate::key_signature::KeySignature;
 use crate::note::Note;
 use crate::time::{BeatFraction, Measure};
 use crate::time_signature::TimeSignature;
+use crate::Clef;
 use indexmap::IndexMap;
 use uuid::Uuid;
-use crate::Clef;
 
 /// A modifier that can be applied to a voice item.
 /// This can include accents, staccatos, etc. or directions like dolce.

@@ -1,5 +1,5 @@
-use derive_more::with_trait::{Add, Neg, Sub};
 use crate::Interval;
+use derive_more::with_trait::{Add, Neg, Sub};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Sub)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

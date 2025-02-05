@@ -8,7 +8,7 @@ pub struct RomanNumeral {
     pub degree: u8,
     pub quality: Tonality,
     pub inversion: Inversion,
-    pub additional_notes: Vec<ScaleDegree>
+    pub additional_notes: Vec<ScaleDegree>,
 }
 
 impl Default for RomanNumeral {
@@ -83,18 +83,21 @@ impl RomanNumeral {
             notes.push(note);
         }
         let chord = Chord::new(notes);
-        chord.rotate_by(self.inversion.value_for(3 + self.additional_notes.len() as u8) as usize)
+        chord.rotate_by(
+            self.inversion
+                .value_for(3 + self.additional_notes.len() as u8) as usize,
+        )
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::Accidental::Natural;
-    use crate::Alphabet;
     use crate::chord::Inversion;
     use crate::key::Key;
     use crate::note::Note;
     use crate::prelude::RomanNumeral;
+    use crate::Accidental::Natural;
+    use crate::Alphabet;
 
     #[test]
     fn test_inversion() {

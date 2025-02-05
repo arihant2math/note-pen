@@ -1,7 +1,7 @@
-use std::num::NonZeroU8;
-use crate::Accidental;
 use crate::key::{Key, Scale};
 use crate::note::Note;
+use crate::Accidental;
+use std::num::NonZeroU8;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]

@@ -129,9 +129,9 @@ impl PartialEq for TimeSignature {
 
 #[cfg(feature = "midi")]
 mod midi {
-    use midi_file::core::{Clocks, DurationName};
     use crate::duration::PrimitiveDuration;
     use crate::TimeSignature;
+    use midi_file::core::{Clocks, DurationName};
 
     impl TimeSignature {
         /// Convert the time signature to MIDI time signature.
