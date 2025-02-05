@@ -100,3 +100,36 @@ impl Duration {
         dots: 0,
     };
 }
+
+#[cfg(feature = "midi")]
+mod midi {
+    use crate::duration::Duration;
+    use crate::prelude::PrimitiveDuration;
+
+    impl PrimitiveDuration {
+        pub fn to_midi(&self) -> u32 {
+            match self {
+                &Self::WHOLE => 8192,
+                &Self::HALF => 2048,
+                &Self::QUARTER => 1024,
+                &Self::EIGHTH => 512,
+                &Self::SIXTEENTH => 256,
+                &Self::THIRTY_SECOND => 128,
+                &Self::SIXTY_FOURTH => 64,
+                _ => unimplemented!("Unsupported time signature: {:?}", self),
+            }
+        }
+    }
+
+    impl Duration {
+        pub fn to_midi(&self) -> u32 {
+            let mut primitive = self.primitive.to_midi();
+            let mut value = primitive;
+            for _ in 0..self.dots {
+                value += primitive / 2;
+                primitive /= 2;
+            }
+            value
+        }
+    }
+}
