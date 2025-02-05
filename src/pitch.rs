@@ -4,6 +4,12 @@ use crate::Interval;
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Sub)]
 pub struct RelativePitch(pub u8);
 
+impl RelativePitch {
+    pub const fn new(pitch: u8) -> Self {
+        Self(pitch % 12)
+    }
+}
+
 // derive!(RelativePitch, From, from, Self, Self(pitch),
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Neg)]
 pub struct Pitch(pub i16);
