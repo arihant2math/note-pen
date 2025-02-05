@@ -33,14 +33,17 @@ pub struct Score {
 mod midi {
     use crate::score::Score;
     use crate::voice::{InnerTimedVoiceItem, VoiceItem};
-    use midi_file::core::{Channel, GeneralMidi};
+    use midi_file::core::{Channel, GeneralMidi, Velocity};
     use midi_file::MidiFile;
+
+    // default velocity
+    const V: Velocity = Velocity::new(64);
 
     impl Score {
         pub fn to_midi(&self) -> midi_file::Result<MidiFile> {
             let mut file = MidiFile::new();
             for part in &self.parts {
-                let mut track = midi_file::Track::default();
+                let mut track = midi_file::file::Track::default();
                 if let Some(ref name) = part.name {
                     track.set_name(name)?;
                 }
@@ -51,15 +54,23 @@ mod midi {
                 track.set_general_midi(ch, GeneralMidi::ElectricGrandPiano)?;
 
                 for voice in &part.voices {
-                    let mut offset = 0;
-                    for (_, i) in voice.items {
+                    for (_, i) in &voice.items {
                         match i {
-                            VoiceItem::Timed(t) => match t.inner {
+                            VoiceItem::Timed(t) => match &t.inner {
+                                // TODO: ignores beat fractions et. al.
                                 InnerTimedVoiceItem::Note(n) => {
-                                    todo!()
+                                    track.push_note_on(0, ch, n.to_midi(), V)?;
+                                    // the note-off event determines the duration of the note
+                                    track
+                                        .push_note_off(t.duration.to_midi(), ch, n.to_midi(), Velocity::default())?;
                                 }
                                 InnerTimedVoiceItem::Chord(c) => {
-                                    todo!()
+                                    for n in c {
+                                        track.push_note_on(0, ch, n.to_midi(), V)?;
+                                    }
+                                    for n in c {
+                                        track.push_note_off(t.duration.to_midi(), ch, n.to_midi(), Velocity::default())?;
+                                    }
                                 }
                                 InnerTimedVoiceItem::Rest => {
                                     todo!()
