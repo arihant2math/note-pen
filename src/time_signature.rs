@@ -126,3 +126,46 @@ impl PartialEq for TimeSignature {
         self.notes == other.notes && self.beat_value == other.beat_value
     }
 }
+
+#[cfg(feature = "midi")]
+mod midi {
+    use midi_file::core::{Clocks, DurationName};
+    use crate::duration::PrimitiveDuration;
+    use crate::TimeSignature;
+
+    impl TimeSignature {
+        /// Convert the time signature to MIDI time signature.
+        pub fn denominator_to_midi(&self) -> DurationName {
+            match self.value() {
+                PrimitiveDuration::WHOLE => DurationName::Whole,
+                PrimitiveDuration::HALF => DurationName::Half,
+                PrimitiveDuration::QUARTER => DurationName::Quarter,
+                PrimitiveDuration::EIGHTH => DurationName::Eighth,
+                PrimitiveDuration::SIXTEENTH => DurationName::Sixteenth,
+                _ => unimplemented!("Unsupported time signature: {:?}", self),
+            }
+        }
+
+        pub fn midi_clicks(&self) -> Clocks {
+            if self.is_compound() {
+                match self.value() {
+                    PrimitiveDuration::HALF => Clocks::DottedWhole,
+                    PrimitiveDuration::QUARTER => Clocks::DottedHalf,
+                    PrimitiveDuration::EIGHTH => Clocks::DottedQuarter,
+                    PrimitiveDuration::SIXTEENTH => Clocks::DottedEighth,
+                    PrimitiveDuration::THIRTY_SECOND => Clocks::DottedSixteenth,
+                    _ => unimplemented!("Unsupported time signature: {:?}", self),
+                }
+            } else {
+                match self.value() {
+                    PrimitiveDuration::WHOLE => Clocks::Whole,
+                    PrimitiveDuration::HALF => Clocks::Half,
+                    PrimitiveDuration::QUARTER => Clocks::Quarter,
+                    PrimitiveDuration::EIGHTH => Clocks::Eighth,
+                    PrimitiveDuration::SIXTEENTH => Clocks::Sixteenth,
+                    _ => unimplemented!("Unsupported time signature: {:?}", self),
+                }
+            }
+        }
+    }
+}

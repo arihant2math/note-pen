@@ -17,10 +17,12 @@ required-features = ["examples"]
 derive_more = { version = "2.0", features = ["std", "add", "not"] }
 indexmap = "2.7"
 itertools = { version = "0.14", optional = true }
+midi_file = { version = "0.0.6", optional = true }
 serde = { version = "1.0", features = ["derive"], optional = true }
 uuid = { version = "1.12", features = ["v4"] }
 
 [features]
 default = []
 examples = ["dep:itertools"]
+midi = ["dep:midi_file"]
 serde = ["dep:serde", "indexmap/serde"]
