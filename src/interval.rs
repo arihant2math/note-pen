@@ -4,7 +4,7 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[repr(transparent)]
-pub struct Interval(pub u8);
+pub struct Interval(pub i16);
 
 impl Interval {
     pub const UNISON: Self = Self(0);
