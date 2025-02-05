@@ -10,6 +10,7 @@ use crate::pitch::{Pitch, RelativePitch};
 /// It is important to note that the u8 representation of the syllables
 /// is different from their pitch value, use [`SolfegeSyllable::into_u8`] to convert it properly.
 #[derive(Copy, Clone, Debug, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SolfegeSyllable {
     Do,
     Di,
@@ -122,6 +123,8 @@ pub struct Moveable(pub Note);
 /// The fixed solfège root is just a movable solfège with a base of C.
 pub const Fixed: Moveable = Moveable(Note::new(Alphabet::C, Accidental::Natural, 4));
 
+#[derive(Copy, Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Solfege {
     pub syllable: SolfegeSyllable,
     /// The solfège root.

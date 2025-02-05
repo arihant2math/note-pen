@@ -2,6 +2,7 @@ use derive_more::with_trait::{Add, Neg, Sub};
 use crate::Interval;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Sub)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RelativePitch(pub u8);
 
 impl RelativePitch {
@@ -12,6 +13,7 @@ impl RelativePitch {
 
 // derive!(RelativePitch, From, from, Self, Self(pitch),
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Neg)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Pitch(pub i16);
 
 impl Pitch {

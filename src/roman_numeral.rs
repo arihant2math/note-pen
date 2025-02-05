@@ -3,6 +3,7 @@ use crate::key::{Key, Scale};
 use crate::{Accidental, ScaleDegree, Tonality};
 
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RomanNumeral {
     pub degree: u8,
     pub quality: Tonality,

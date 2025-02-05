@@ -4,6 +4,7 @@ use crate::key::{Key, Scale};
 use crate::note::Note;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ScaleDegree {
     pub degree: NonZeroU8,
     pub quality: Accidental,

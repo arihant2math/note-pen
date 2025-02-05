@@ -3,6 +3,7 @@ use crate::note::Note;
 use crate::prelude::Pitch;
 
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Key {
     Chromatic,
     Diatonic {
@@ -68,6 +69,7 @@ impl Key {
 }
 
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Scale {
     pub notes: Vec<Note>,
 }
