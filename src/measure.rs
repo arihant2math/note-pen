@@ -10,6 +10,7 @@ pub struct Color {
     pub red: u8,
     pub green: u8,
     pub blue: u8,
+    pub alpha: u8,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -355,4 +356,9 @@ pub struct Measure {
     key: Key,
     notes: TimedMeasureItem,
     directions: Vec<Direction>,
+}
+
+#[cfg(feature = "musicxml")]
+mod musicxml {
+    use super::*;
 }
