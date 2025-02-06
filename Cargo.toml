@@ -1,6 +1,6 @@
 [package]
 name = "note-pen"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 authors = ["Ashwin Naren <arihant2math@gmail.com>"]
 description = "A library to represent musical concepts in Rust"
