@@ -1,6 +1,36 @@
 use crate::part::Part;
 use std::fmt::Display;
 
+#[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum ScoreCreditKey {
+    Composer,
+    Lyricist,
+    Arranger,
+    Transcriber,
+    Translator,
+    Poet,
+    Contributor,
+    Publisher,
+    Other(String),
+}
+
+impl Display for ScoreCreditKey {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ScoreCreditKey::Composer => write!(f, "Composer"),
+            ScoreCreditKey::Lyricist => write!(f, "Lyricist"),
+            ScoreCreditKey::Arranger => write!(f, "Arranger"),
+            ScoreCreditKey::Transcriber => write!(f, "Transcriber"),
+            ScoreCreditKey::Translator => write!(f, "Translator"),
+            ScoreCreditKey::Poet => write!(f, "Poet"),
+            ScoreCreditKey::Contributor => write!(f, "Contributor"),
+            ScoreCreditKey::Publisher => write!(f, "Publisher"),
+            ScoreCreditKey::Other(s) => write!(f, "{}", s),
+        }
+    }
+}
+
 /// A generic storage class for credits, such as for the composer, arranger, lyricist, etc.
 ///
 /// There can be multiple values for a single key, such as multiple composers,
@@ -8,11 +38,7 @@ use std::fmt::Display;
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ScoreCredit {
-    // TODO: Defaults with keys for composer, arranger, lyricist, etc.
-    /// The key for the credit, such as "Composer" or "Arranger".
-    ///
-    /// This should be a human-readable string, and should not have leading or trailing whitespace.
-    pub key: String,
+    pub key: ScoreCreditKey,
     pub value: Vec<String>,
 }
 
@@ -55,7 +81,7 @@ mod tests {
     fn test_score_credit_display() {
         use super::*;
         let credit = ScoreCredit {
-            key: "Composer".to_string(),
+            key: ScoreCreditKey::Composer,
             value: vec!["Johann Sebastian Bach".to_string()],
         };
         assert_eq!(credit.to_string(), "Composer: Johann Sebastian Bach");
