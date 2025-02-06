@@ -192,6 +192,7 @@ pub enum TechnicalType {
     Toe,
     Fingernails,
     Hole,
+    // TODO: Finish
     Arrow,
     Handbell,
     BrassBend,
