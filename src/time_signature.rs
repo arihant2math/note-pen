@@ -1,13 +1,22 @@
 use crate::duration::PrimitiveDuration;
 
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum TimeSignatureSymbol {
+    CommonTime,
+    CutTime,
+    Custom(String)
+}
+
 /// Represents a time signature.
 ///
 /// Internally, it stores the number of notes in a measure and the beat value.
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimeSignature {
     pub(crate) notes: u64,
     pub(crate) beat_value: u64,
+    pub(crate) symbol: Option<TimeSignatureSymbol>
 }
 
 impl TimeSignature {
@@ -15,11 +24,13 @@ impl TimeSignature {
     pub const COMMON_TIME: Self = Self {
         notes: 4,
         beat_value: 4,
+        symbol: Some(TimeSignatureSymbol::CommonTime)
     };
     /// 2/2 time signature
     pub const CUT_TIME: Self = Self {
         notes: 2,
         beat_value: 2,
+        symbol: Some(TimeSignatureSymbol::CutTime)
     };
 
     /// Create a new time signature.
@@ -34,7 +45,11 @@ impl TimeSignature {
     /// ```
     #[inline]
     pub const fn new(notes: u64, beat_value: u64) -> Self {
-        Self { notes, beat_value }
+        Self {
+            notes,
+            beat_value,
+            symbol: None
+        }
     }
 
     /// Create a simple time signature.

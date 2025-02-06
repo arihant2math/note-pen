@@ -17,7 +17,7 @@ pub mod solfege;
 pub mod time;
 mod time_signature;
 mod tonality;
-pub mod voice;
+pub mod measure;
 
 pub use accidental::Accidental;
 pub use alphabet::Alphabet;
@@ -37,12 +37,12 @@ pub mod prelude {
     pub use crate::chord::{Chord, Inversion};
     pub use crate::duration::{Duration, PrimitiveDuration};
     pub use crate::key::{Key, Scale};
+    pub use crate::measure::{Measure, TimedMeasureItem, TimedMeasureItemInner};
     pub use crate::note::Note;
     pub use crate::pitch::{Pitch, RelativePitch};
     pub use crate::roman_numeral::RomanNumeral;
     pub use crate::score::{Score, ScoreCredit};
     pub use crate::solfege::{Solfege, SolfegeSyllable};
-    pub use crate::voice::{Voice, VoiceItem};
     pub use crate::{
         Accidental, Alphabet, Clef, Interval, KeySignature, Part, Rest, ScaleDegree, TimeSignature,
         Tonality,
