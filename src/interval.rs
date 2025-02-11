@@ -22,4 +22,8 @@ impl Interval {
     pub const MINOR_SEVENTH: Self = Self(10);
     pub const MAJOR_SEVENTH: Self = Self(11);
     pub const OCTAVE: Self = Self(12);
+
+    pub const fn new(interval: i16) -> Self {
+        Self(interval)
+    }
 }
