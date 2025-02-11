@@ -5,7 +5,7 @@ use crate::duration::PrimitiveDuration;
 pub enum TimeSignatureSymbol {
     CommonTime,
     CutTime,
-    Custom(String)
+    Custom(String),
 }
 
 /// Represents a time signature.
@@ -16,7 +16,7 @@ pub enum TimeSignatureSymbol {
 pub struct TimeSignature {
     pub(crate) notes: u64,
     pub(crate) beat_value: u64,
-    pub(crate) symbol: Option<TimeSignatureSymbol>
+    pub(crate) symbol: Option<TimeSignatureSymbol>,
 }
 
 impl TimeSignature {
@@ -24,13 +24,13 @@ impl TimeSignature {
     pub const COMMON_TIME: Self = Self {
         notes: 4,
         beat_value: 4,
-        symbol: Some(TimeSignatureSymbol::CommonTime)
+        symbol: Some(TimeSignatureSymbol::CommonTime),
     };
     /// 2/2 time signature
     pub const CUT_TIME: Self = Self {
         notes: 2,
         beat_value: 2,
-        symbol: Some(TimeSignatureSymbol::CutTime)
+        symbol: Some(TimeSignatureSymbol::CutTime),
     };
 
     /// Create a new time signature.
@@ -48,7 +48,7 @@ impl TimeSignature {
         Self {
             notes,
             beat_value,
-            symbol: None
+            symbol: None,
         }
     }
 
