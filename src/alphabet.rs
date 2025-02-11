@@ -17,6 +17,21 @@ pub enum Alphabet {
     G,
 }
 
+impl Alphabet {
+    pub fn from_char(p0: char) -> Option<Self> {
+        match p0 {
+            'A' => Some(Alphabet::A),
+            'B' => Some(Alphabet::B),
+            'C' => Some(Alphabet::C),
+            'D' => Some(Alphabet::D),
+            'E' => Some(Alphabet::E),
+            'F' => Some(Alphabet::F),
+            'G' => Some(Alphabet::G),
+            _ => None,
+        }
+    }
+}
+
 impl Debug for Alphabet {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {

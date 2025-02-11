@@ -2,6 +2,7 @@ use crate::chord::Chord;
 use crate::pitch::Pitch;
 use crate::{Accidental, Alphabet, Interval};
 use std::ops::{Add, Sub};
+use std::str::FromStr;
 
 #[derive(Copy, Clone, Debug, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -99,6 +100,22 @@ impl Note {
     #[inline]
     pub const fn decrement_by(&self, steps: i64) -> Self {
         Self::from_id(Pitch(self.id().0 - steps as i16))
+    }
+}
+
+impl FromStr for Note {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let letter_name = s.chars().next().ok_or(())?;
+        let alphabet = Alphabet::from_char(letter_name).ok_or(())?;
+        let accidental = match s.chars().nth(1) {
+            Some('#') => Accidental::Sharp,
+            Some('b') => Accidental::Flat,
+            _ => Accidental::None,
+        };
+        let octave = s.chars().last().map(|s| s.to_digit(10).ok_or(())).unwrap_or(Ok(0))? as u8;
+        Ok(Self::new(alphabet, accidental, octave))
     }
 }
 
