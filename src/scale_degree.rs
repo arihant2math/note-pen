@@ -1,7 +1,8 @@
 use crate::key::{Key, Scale};
 use crate::note::Note;
-use crate::Accidental;
+use crate::{Accidental, Interval};
 use std::num::NonZeroU8;
+use crate::pitch::{RelativePitch, RelativeSystem};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -26,6 +27,23 @@ impl ScaleDegree {
             .enumerate()
             .find(|(_, &n)| n.id().simple() == note.id().simple())
             .map(|(i, _)| Self::new(i as u8 + 1, Accidental::None))
+    }
+}
+
+impl RelativeSystem for ScaleDegree {
+    fn root() -> Self {
+        Self::default()
+    }
+
+    fn base(i: RelativePitch) -> RelativePitch {
+        i
+    }
+
+    fn interval(first: Self, second: Self) -> Interval {
+        let first = first.degree.get() as i16;
+        let second = second.degree.get() as i16;
+        let diff = second - first;
+        Interval::new(diff)
     }
 }
 

@@ -11,7 +11,12 @@ impl RelativePitch {
     }
 }
 
-// derive!(RelativePitch, From, from, Self, Self(pitch),
+pub trait RelativeSystem {
+    fn root() -> Self;
+    fn base(i: RelativePitch) -> RelativePitch;
+    fn interval(first: Self, second: Self) -> Interval;
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Add, Neg)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Pitch(pub i16);

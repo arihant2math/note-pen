@@ -14,9 +14,9 @@ pub enum TimeSignatureSymbol {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimeSignature {
-    pub(crate) notes: u64,
-    pub(crate) beat_value: u64,
-    pub(crate) symbol: Option<TimeSignatureSymbol>,
+    pub notes: u64,
+    pub beat_value: u64,
+    pub symbol: Option<TimeSignatureSymbol>,
 }
 
 impl TimeSignature {

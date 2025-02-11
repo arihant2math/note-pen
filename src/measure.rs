@@ -346,14 +346,13 @@ pub struct TimedMeasureItem {
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Measure {
-    clef: Clef,
-    time_signature: TimeSignature,
-    key: Key,
-    notes: TimedMeasureItem,
-    directions: Vec<Direction>,
+    pub clef: Clef,
+    pub time_signature: TimeSignature,
+    pub key: Key,
+    pub notes: TimedMeasureItem,
+    pub directions: Vec<Direction>,
 }
 
 #[cfg(feature = "musicxml")]
 mod musicxml {
-    use super::*;
 }
