@@ -6,6 +6,7 @@ pub mod duration;
 mod interval;
 pub mod key;
 mod key_signature;
+pub mod measure;
 pub mod note;
 mod part;
 pub mod pitch;
@@ -17,7 +18,6 @@ pub mod solfege;
 pub mod time;
 mod time_signature;
 mod tonality;
-pub mod measure;
 
 pub use accidental::Accidental;
 pub use alphabet::Alphabet;
