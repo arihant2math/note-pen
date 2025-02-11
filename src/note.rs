@@ -141,8 +141,8 @@ impl Sub<Interval> for Note {
 
 #[cfg(feature = "midi")]
 mod midi {
-    use midi_file::core::NoteNumber;
     use crate::note::Note;
+    use midi_file::core::NoteNumber;
     impl Note {
         pub fn to_midi(&self) -> NoteNumber {
             NoteNumber::new((self.id().0 + 69) as u8)
@@ -151,9 +151,9 @@ mod midi {
 
     #[cfg(test)]
     mod tests {
-        use midi_file::core::NoteNumber;
-        use crate::{Accidental, Alphabet};
         use crate::note::Note;
+        use crate::{Accidental, Alphabet};
+        use midi_file::core::NoteNumber;
 
         const C4: NoteNumber = NoteNumber::new(72);
         const D4: NoteNumber = NoteNumber::new(74);

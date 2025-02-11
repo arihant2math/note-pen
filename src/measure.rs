@@ -1,8 +1,8 @@
-use crate::{Clef, TimeSignature};
 use crate::chord::Chord;
 use crate::duration::Duration;
 use crate::key::Key;
 use crate::note::Note;
+use crate::{Clef, TimeSignature};
 
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -17,7 +17,7 @@ pub struct Color {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Placement {
     Above,
-    Below
+    Below,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -34,7 +34,7 @@ pub struct Position {
 pub struct Font {
     font_family: Option<String>,
     font_size: Option<f32>,
-    font_style: Option<String>
+    font_style: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -56,10 +56,7 @@ pub enum ArticulationType {
     Stress,
     Unstress,
     SoftAccent,
-    OtherArticulation {
-        smufl: Option<String>,
-        text: String,
-    },
+    OtherArticulation { smufl: Option<String>, text: String },
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -87,7 +84,7 @@ pub enum OrnamentType {
     InvertedMordent,
     Schleifer,
     Tremolo,
-    OtherOrnament
+    OtherOrnament,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -129,9 +126,7 @@ pub enum Dynamic {
     N,
     PF,
     SFZP,
-    OtherDynamics {
-        glyph_name: String,
-    }
+    OtherDynamics { glyph_name: String },
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -152,7 +147,7 @@ pub enum ExtendedNotation<T> {
     Start {
         placement: Placement,
         id: u16,
-        details: T
+        details: T,
     },
     Stop(u16),
 }
@@ -163,7 +158,7 @@ pub enum MultiExtendedNotation<T> {
     Start {
         placement: Placement,
         id: u16,
-        details: T
+        details: T,
     },
     Stop(u16),
     Continue(u16),
@@ -242,7 +237,7 @@ pub enum Notation {
         show_type: Option<bool>,
         number: Option<u8>,
         placement: Option<Placement>,
-        position: Position
+        position: Position,
     },
     Technical(Technical),
     // TODO: the following
@@ -284,7 +279,7 @@ pub enum DirectionType {
     Scordatura,
     Image {
         // TODO: force uri
-        source: String
+        source: String,
     },
     PrincipalVoice,
     Percussion,
@@ -324,7 +319,7 @@ pub enum TimedMeasureItemInner {
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TimeModification {
     pub actual_notes: u8,
-    pub normal_notes: u8
+    pub normal_notes: u8,
 }
 
 #[derive(Debug, Clone, PartialEq)]
